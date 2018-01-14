@@ -1,0 +1,57 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.6.1
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+  database:
+    build: ./database
+    image: smartlab/database-service
+    command: bash -c "sh run.sh"
+    volumes:
+      - ./database:/database-service
+    ports:
+      - "${DATABASE_SERVICE_PORT}:3000"
+    environment:
+      - DB_HOST
+      - DB_NAME
+      - DB_USERNAME
+      - DB_PASSWORD
+      - RAILS_ENV
+      - SECRET_KEY_BASE
+    depends_on:
+      - db
+#  jobs:
+#    build: ./server
+#    image: nxvendas/admin_api
+#    command: bundle exec shoryuken -R -C config/shoryuken.yml
+#    volumes:
+#      - ./server:/app-server
+#    environment:
+#      - DB_HOST
+#      - DB_NAME
+#      - DB_USERNAME
+#      - DB_PASSWORD
+#      - RAILS_ENV
+#      - SECRET_KEY_BASE
+#      - RABBITMQ_URL
+#      - AWS_ACCESS_KEY_ID
+#      - AWS_SECRET_ACCESS_KEY
+#      - AWS_REGION
+#      - AWS_FCM_QUEUE
+#      - AWS_SERVICE_QUEUE
+#      - FCM_KEY
+#    depends_on:
+#      - db
+#  front:
+#    build: ./front
+#    image: nxvendas/admin_front
+#    command: npm start
+#    volumes:
+#      - ./front:/usr/src/app
+#    ports:
+#      - "4200:4200"
