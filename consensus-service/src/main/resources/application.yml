@@ -1,0 +1,6 @@
+server:
+  port: ${PORT:8742}
+
+spring:
+  application:
+    name: consensus-service
