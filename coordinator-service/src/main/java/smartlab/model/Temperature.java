@@ -2,25 +2,25 @@ package smartlab.model;
 
 public class Temperature {
 
-    String temperature;
-    Double rating;
+    int temperature;
+    int rating;
 
     public Temperature() {
     }
 
-    public Double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
-    public String getTemperature() {
+    public int getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
+    public void setTemperature(int temperature) {
         this.temperature = temperature;
     }
 }

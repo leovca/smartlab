@@ -8,6 +8,11 @@ public class Temperature {
     public Temperature() {
     }
 
+    public Temperature(String temperature, Double rating) {
+        this.temperature = temperature;
+        this.rating = rating;
+    }
+
     public Double getRating() {
         return rating;
     }

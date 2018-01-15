@@ -9,6 +9,6 @@ public class UserController {
     @GetMapping("user/online")
     public Integer[] getOnlineUsers(){
         //Deve retornar o id dos usuários online
-        return new Integer[]{1,2,3,4,5};
+        return new Integer[]{1,2,3,4,5,1231};
     }
 }

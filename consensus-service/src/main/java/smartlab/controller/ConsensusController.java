@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 public class ConsensusController {
 
-    @PostMapping("calculateTemperature/{idAlgortimo}")
+    @PostMapping("calculateTemperature/{idAlgorithm}")
     public Integer getNewTemperature(@RequestBody List<UserTemperatureProfile> userTemperatureProfiles,
-                                     @PathVariable("idAlgoritimo") Integer algoritimo){
+                              @PathVariable("idAlgorithm") Integer idAlgorithm){
 
         //coloca aqui suas pohhas
 
