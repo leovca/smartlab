@@ -11,3 +11,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 #    schema: classpath:/script/schema.sql
 #    data: classpath:/script/data.sql
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
