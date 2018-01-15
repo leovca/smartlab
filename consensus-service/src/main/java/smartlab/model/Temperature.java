@@ -15,4 +15,12 @@ public class Temperature {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
 }
