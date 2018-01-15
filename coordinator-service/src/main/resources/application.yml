@@ -1,0 +1,13 @@
+server:
+  port: ${PORT:5153}
+
+spring:
+  application:
+    name: coordinator-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartlab_coordinator?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+#    schema: classpath:/script/schema.sql
+#    data: classpath:/script/data.sql

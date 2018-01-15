@@ -1,0 +1,6 @@
+server:
+  port: ${PORT:8732}
+
+spring:
+  application:
+    name: edge-service

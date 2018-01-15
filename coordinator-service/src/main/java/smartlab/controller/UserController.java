@@ -1,50 +1,26 @@
 package smartlab.controller;
 
-import org.rosuda.REngine.REXP;
-import org.rosuda.REngine.Rserve.RConnection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import smartlab.intercom.UserClient;
-import smartlab.model.User;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import smartlab.service.TemperatureService;
+import smartlab.service.UserVoteService;
 
 @RestController
 public class UserController {
 
-    protected Logger logger = Logger.getLogger(UserController.class.getName());
+    @Autowired
+    private UserVoteService userVoteService;
 
     @Autowired
-    private UserClient userClient;
+    private TemperatureService temperatureService;
 
-
-    @RequestMapping("/user-status-change")
-    private List<User> userStatusChange(){
-        logger.info("userStatusChange()");
-
-        try {
-            String script = new String(Files.readAllBytes(Paths.get(getClass().getResource("knn.R").toURI())));
-            RConnection c = new RConnection("127.0.0.1", 1010);
-            REXP x = c.eval(script);
-            logger.info(x.asString());
-
-        }catch (Exception ex){
-            logger.info(ex.getMessage());
-        }
-
-
-        return userClient.findOnlineUsers()
-                .stream()
-                .map(user -> {
-                    user.setUserDataToPredictList(userClient.getUserDetails());
-                    return user;
-                })
-                .collect(Collectors.toList());
+    @PostMapping("user/{userId}/temperature")
+    public Boolean receiverTemperatureVote(@PathVariable("userId") Integer userId, @RequestBody Integer userVote){
+        userVoteService.registerTemperatureVote(userId, userVote);
+        temperatureService.updateTemperature();
+        return Boolean.TRUE;
     }
-
 }

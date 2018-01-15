@@ -1,0 +1,6 @@
+server:
+  port: ${PORT:8733}
+
+spring:
+  application:
+    name: user-service
