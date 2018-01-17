@@ -1,6 +1,6 @@
 # CREATE DATABASE `smartlab_coordinator` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-CREATE TABLE `vote` (
+CREATE TABLE `coordinator_vote` (
   `id_vote` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `online_users` int(11) DEFAULT NULL,

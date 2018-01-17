@@ -11,7 +11,6 @@ public class AirController {
 
     Logger logger = Logger.getLogger(AirController.class.getName());
 
-
     @PostMapping("air/temperature")
     public void setAirTemperature(@RequestBody Integer temperature){
         logger.info("Temperature: " + temperature);

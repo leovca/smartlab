@@ -1,0 +1,19 @@
+server:
+  port: ${PORT:8761}
+
+spring:
+  application:
+    name: eureka-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+---
+
+spring:
+  profiles: docker
+  devtools:
+    remote:
+      secret: secret
