@@ -44,7 +44,7 @@ public class TemperatureService {
         vote.setInternalTemperature(edgeClient.internalTemperature());
         vote.setOnlineUsers(edgeClient.onlineUsers());
 
-        vote.setVote(0);
+        vote.setVote(16);
 
         return vote;
     }

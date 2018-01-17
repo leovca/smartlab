@@ -19,6 +19,9 @@ public class UserController {
 
     @PostMapping("user/{userId}/temperature")
     public Boolean receiverTemperatureVote(@PathVariable("userId") Integer userId, @RequestBody Integer userVote){
+        if(userVote< 16 || userVote>30){
+            throw new RuntimeException("Temperatura fora do intervalo");
+        }
         userVoteService.registerTemperatureVote(userId, userVote);
         temperatureService.updateTemperature();
         return Boolean.TRUE;

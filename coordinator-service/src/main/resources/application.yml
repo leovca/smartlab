@@ -5,19 +5,19 @@ spring:
   application:
     name: coordinator-service
   datasource:
-    url: jdbc:mysql://localhost:3306/db?useSSL=false
+    url: jdbc:mysql://localhost:3306/smartlab_coordinator?useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
 #  jpa:
 #    hibernate:
 #      ddl-auto: create
-
-
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
 ---
 

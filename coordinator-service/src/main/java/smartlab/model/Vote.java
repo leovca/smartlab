@@ -18,7 +18,7 @@ public class Vote {
     private Integer vote;
     private Float externalTemperature;
     private Float internalTemperature;
-    private Integer hour = new Calendar.Builder().build().get(Calendar.HOUR_OF_DAY);
+    private Integer hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
     private Date created = new Date();
 

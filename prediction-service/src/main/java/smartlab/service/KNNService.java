@@ -34,14 +34,15 @@ public class KNNService {
         add(attrPref);
     }};
 
+
+
     private Instance makeInstance(Vote vote){
         Instance instance = new DenseInstance(5);
         instance.setValue(attrExternalTemperature, vote.getExternalTemperature());
         instance.setValue(attrInternalTemperature, vote.getInternalTemperature());
         instance.setValue(attrUsers, vote.getOnlineUsers());
         instance.setValue(attrHour, vote.getHour());
-        instance.setValue(attrPref, vote.getVote());
-
+        instance.setValue(attrPref, vote.getVote().toString());
         return instance;
     }
 
@@ -50,9 +51,13 @@ public class KNNService {
         Instances train = new Instances("dados", attributes, votes.size());
         train.setClassIndex(4);
 
+        List<Instance> instances = new ArrayList<>();
+
         votes.stream()
                 .map(this::makeInstance)
-                .forEach(train::add);
+                .forEach(instances::add);
+
+        train.addAll(instances);
 
         Classifier ibk = new IBk(1);
         ibk.buildClassifier(train);
@@ -67,16 +72,25 @@ public class KNNService {
         for (int i = 0; i < values.length; i++) {
             temperatures.add(new Temperature(attrPref.value(i), values[i]));
         }
-
         return temperatures;
     }
 
     public UserTemperatureProfile calculateTemperatureProfile(List<Vote> voteList, Vote current) throws Exception {
         UserTemperatureProfile userTemperatureProfile = new UserTemperatureProfile();
 
+//        if(voteList.size()>1){
         Classifier classifier = buildModel(voteList);
         Instance currentInstance = makeInstance(current);
         userTemperatureProfile.setTemperatures(getRatings(classifier, currentInstance));
+//        return userTemperatureProfile;
+//        } else if (voteList.size() == 1) {
+//            userTemperatureProfile.setTemperatures(new ArrayList<>());
+//            for (int i=16; i<31; i++){
+//                userTemperatureProfile.getTemperatures().add(new Temperature(String.valueOf(i), 0d));
+//            }
+//            int index = voteList.get(0).getVote() -16;
+//            userTemperatureProfile.getTemperatures().get(index).setRating(10d);
+//        }
         return userTemperatureProfile;
     }
 
