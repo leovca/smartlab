@@ -14,9 +14,6 @@ public class AlgorithmsFactory {
                        return new Multiplicative();
                  } else if (T == AlgorithmsType.MostPleasure) {
                        return new MostPleasure();
-                 } else if (T == AlgorithmsType.Summarized) {
-                       return new Summarized();
-
                  } else {
                      return null;
                  }

@@ -1,11 +1,12 @@
 package smartlab.model;
 
 /* 
-    [Vote]: Armazena o voto do usuário e um atributo 
-    [ScaleValue]: Armazena o valor da escala referente ao referido voto 
+    [Vote]: Armazena o rotulo
+    [ScaleValue]: Armazena o valor da escala referente ao algoritmo de AM
  */
 public class Vote {
-   
+
+    //
     private double Vote;
     private double ScaleValue;
 

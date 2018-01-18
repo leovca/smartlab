@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class Summarized extends Algorithms  {
+public class Summarized {
     
     public List<User> GetAll(List<User> list, String nome_algoritmo ) {
 

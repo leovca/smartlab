@@ -77,13 +77,10 @@ public class AverageWithoutMisery extends Algorithms {
         return ((Vote) temp);
         
     }
-    
 
-    public void calcAverageWithoutMisery(List<User> listUser, double limit){
-        
-        
-        
-        
+    @Override
+    public Vote GetResult(List<User> list) {
+        return null;
     }
 
 

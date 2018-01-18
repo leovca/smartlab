@@ -94,7 +94,7 @@ import java.util.stream.Collectors;
         /* Total */
         AlgorithmsFactory f = new AlgorithmsFactory();
         Summarized SUM;
-        SUM = (Summarized) f.getAlgorithm(AlgorithmsType.Summarized);
+        SUM = new Summarized();
         
         return SUM.GetAll(list,"BordaCount");
         
