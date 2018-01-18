@@ -1,9 +1,6 @@
 package smartlab.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import smartlab.model.Temperature;
 import smartlab.model.UserTemperatureProfile;
 
@@ -14,7 +11,15 @@ public class ConsensusController {
 
     @PostMapping("calculateTemperature/{idAlgortimo}")
     public Integer getNewTemperature(@RequestBody List<UserTemperatureProfile> userTemperatureProfiles,
-                                     @PathVariable("idAlgoritimo") Integer algoritimo){
+                                     @PathVariable("idAlgoritimo") Integer algoritimo) {
+
+        //coloca aqui suas pohhas
+
+        return 25;
+    }
+
+    @GetMapping("Temperature")
+    public Integer getTemperature() {
 
         //coloca aqui suas pohhas
 
