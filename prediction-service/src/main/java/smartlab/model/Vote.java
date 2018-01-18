@@ -1,34 +1,18 @@
 package smartlab.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Calendar;
+
 import java.util.Date;
 
-@Entity
 public class Vote {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idVote;
     private Integer userId;
     private Integer onlineUsers;
     private Integer vote;
     private Float externalTemperature;
     private Float internalTemperature;
-    private Integer hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    private Integer hour;
 
     private Date created = new Date();
-
-    public Integer getIdVote() {
-        return idVote;
-    }
-
-    public void setIdVote(Integer idVote) {
-        this.idVote = idVote;
-    }
 
     public Integer getUserId() {
         return userId;

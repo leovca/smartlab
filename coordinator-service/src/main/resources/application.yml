@@ -9,5 +9,32 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
-#    schema: classpath:/script/schema.sql
-#    data: classpath:/script/data.sql
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+---
+
+spring:
+  profiles: docker
+
+  datasource:
+    url: jdbc:mysql://db:3306/db?useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+  instance:
+    prefer-ip-address: true

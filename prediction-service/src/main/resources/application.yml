@@ -1,9 +1,9 @@
 server:
-  port: ${PORT:8732}
+  port: ${PORT:8752}
 
 spring:
   application:
-    name: edge-service
+    name: prediction-service
 
 eureka:
   client:
