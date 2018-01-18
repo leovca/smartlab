@@ -1,7 +1,4 @@
-
-package br.com.ufba.grouprecommendation.algoritmos;
-
-
+package smartlab.algoritmos;
 
 public abstract class Algorithms {
       

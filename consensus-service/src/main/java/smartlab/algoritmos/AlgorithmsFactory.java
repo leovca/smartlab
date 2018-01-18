@@ -1,22 +1,20 @@
-package br.com.ufba.grouprecommendation.algoritmos;
-
-import br.com.ufba.grouprecommendation.algoritmos.AlgorithmsType.Type;
+package smartlab.algoritmos;
 
 public class AlgorithmsFactory {
 
-        public Algorithms getAlgorithm(AlgorithmsType.Type T) {
+        public Algorithms getAlgorithm(AlgorithmsType T) {
         
-                if (T == Type.LeastMisery) {
+                if (T == AlgorithmsType.LeastMisery) {
                        return new LeastMisery();
-                 } else if (T == Type.BorderCount) {
+                 } else if (T == AlgorithmsType.BorderCount) {
                        return new BordaCount();
-                 } else if (T == Type.AverageWithoutMisery) {
+                 } else if (T == AlgorithmsType.AverageWithoutMisery) {
                        return new AverageWithoutMisery();
-                 } else if (T == Type.Multiplicative) {
+                 } else if (T == AlgorithmsType.Multiplicative) {
                        return new Multiplicative();
-                 } else if (T == Type.MostPleasure) {
+                 } else if (T == AlgorithmsType.MostPleasure) {
                        return new MostPleasure();
-                 } else if (T == Type.Summarized) {
+                 } else if (T == AlgorithmsType.Summarized) {
                        return new Summarized();
 
                  } else {

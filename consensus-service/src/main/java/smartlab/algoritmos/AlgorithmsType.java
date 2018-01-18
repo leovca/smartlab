@@ -1,9 +1,5 @@
-package br.com.ufba.grouprecommendation.algoritmos;
+package smartlab.algoritmos;
 
-public class AlgorithmsType {
-
-    public enum Type {
-        LeastMisery, AverageWithoutMisery, Multiplicative, MostPleasure, BorderCount,Summarized
-    }
-    
+public enum AlgorithmsType {
+    LeastMisery, AverageWithoutMisery, Multiplicative, MostPleasure, BorderCount, Summarized
 }

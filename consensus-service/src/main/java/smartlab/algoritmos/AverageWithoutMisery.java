@@ -1,7 +1,8 @@
-package br.com.ufba.grouprecommendation.algoritmos;
+package smartlab.algoritmos;
 
-import br.com.ufba.grouprecommendation.model.User;
-import br.com.ufba.grouprecommendation.model.Vote;
+import smartlab.model.User;
+import smartlab.model.Vote;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
