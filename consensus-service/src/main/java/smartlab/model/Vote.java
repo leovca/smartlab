@@ -27,6 +27,8 @@ public class Vote {
         this.rating = ScaleValue;
     }
 
-   
-    
+    public Vote(double rotulo, double rating) {
+        this.rotulo = rotulo;
+        this.rating = rating;
+    }
 }

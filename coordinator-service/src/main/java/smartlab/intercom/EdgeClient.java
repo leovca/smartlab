@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @FeignClient("edge-service")
 public interface EdgeClient {
 
@@ -14,9 +16,12 @@ public interface EdgeClient {
     @GetMapping("/externalTemperature")
     Float externalTemperature();
 
-    @GetMapping("/onlineUsers")
-    Integer onlineUsers();
+    @GetMapping("/online")
+    List<Integer> onlineUsers();
 
     @PostMapping("air/temperature")
     void setAirTemperature(@RequestBody Double temperature);
+
+    @PostMapping("air/shutdown")
+    void shutdownAir();
 }

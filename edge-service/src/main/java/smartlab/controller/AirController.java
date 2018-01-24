@@ -16,4 +16,8 @@ public class AirController {
         logger.info("Temperature: " + temperature);
     }
 
+    @PostMapping("air/shutdown")
+    public void shutdownAir(){
+        logger.info("Desligar Ar");
+    }
 }

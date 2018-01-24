@@ -23,13 +23,9 @@ public class UserVoteService {
         vote.setVote(userVote);
         vote.setExternalTemperature(edgeClient.externalTemperature());
         vote.setInternalTemperature(edgeClient.internalTemperature());
-        vote.setOnlineUsers(edgeClient.onlineUsers());
+        vote.setOnlineUsers(edgeClient.onlineUsers().size());
 
         voteRepository.save(vote);
-
-    }
-
-    public void getUserTemperatureProfile(Integer userId){
 
     }
 

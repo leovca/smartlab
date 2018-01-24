@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 import smartlab.intercom.ConsensusClient;
 import smartlab.intercom.EdgeClient;
 import smartlab.intercom.PredictionClient;
-import smartlab.intercom.UserClient;
 import smartlab.model.*;
 import smartlab.repository.VoteRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,9 +16,6 @@ public class TemperatureService {
 
     @Autowired
     EdgeClient edgeClient;
-
-    @Autowired
-    UserClient userClient;
 
     @Autowired
     PredictionClient predictionClient;
@@ -37,10 +32,9 @@ public class TemperatureService {
     private UserPreference getCurrent(){
         UserPreference vote = new UserPreference();
 
-        vote.setOnlineUsers(edgeClient.onlineUsers());
+        vote.setOnlineUsers(edgeClient.onlineUsers().size());
         vote.setExternalTemperature(edgeClient.externalTemperature());
         vote.setInternalTemperature(edgeClient.internalTemperature());
-        vote.setOnlineUsers(edgeClient.onlineUsers());
 
         vote.setVote(16);
 
@@ -48,7 +42,7 @@ public class TemperatureService {
     }
 
     public void updateTemperature(){
-        List<Integer> onlineUsers = Arrays.asList(userClient.getOnlineUsers());
+        List<Integer> onlineUsers = edgeClient.onlineUsers();
         UserPreference current = getCurrent();
 
         List<UserTemperatureProfile> profiles = onlineUsers.stream()
@@ -58,8 +52,12 @@ public class TemperatureService {
                 .map(predictionClient::predictTemperature)
                 .collect(Collectors.toList());
 
-       Recomendacao finalTemperature = consensusClient.getNewTemperature(profiles, AlgorithmsType.AverageWithoutMisery);
+        if(profiles.isEmpty()){
+            edgeClient.shutdownAir();
+        } else {
+            Recomendacao finalTemperature = consensusClient.getNewTemperature(profiles, AlgorithmsType.AverageWithoutMisery);
+            edgeClient.setAirTemperature(finalTemperature.getConsenso().getRotulo());
+        }
 
-        edgeClient.setAirTemperature(finalTemperature.getConsenso().getRotulo());
     }
 }
