@@ -20,7 +20,7 @@ public abstract class Algorithms {
 
     List<Vote> getVotesInRotulo(List<User> usuarios, Double rotulo){
         return usuarios.stream()
-                .map(usuario -> usuario.getVote()
+                .map(usuario -> usuario.getVotes()
                         .stream()
                         .filter(v -> v.getRotulo() == rotulo)
                         .findFirst().get()
@@ -30,7 +30,7 @@ public abstract class Algorithms {
     List<Double> getRotulos(List<User> list){
         return list.stream()
                 .map(usuario ->
-                        usuario.getVote()
+                        usuario.getVotes()
                                 .stream()
                                 .map(v -> v.getRotulo())
                                 .collect(Collectors.toList()))

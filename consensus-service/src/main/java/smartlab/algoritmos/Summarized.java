@@ -20,13 +20,13 @@ public class Summarized {
         List<Vote> list_vote_temp = new ArrayList<>();
 
         List<Double> scale = list.stream().map(p -> 
-                p.getVote().stream().map(v -> v.getRating()).collect(Collectors.toList())
+                p.getVotes().stream().map(v -> v.getRating()).collect(Collectors.toList())
         ).collect(Collectors.toList()).get(0);
 
         for (Object s : scale) {
 
             votes_filter = list.stream().map(p -> 
-                p.getVote().stream().filter( v -> String.valueOf(v.getRating()).equals(String.valueOf(s))).collect(Collectors.toList()).get(0)
+                p.getVotes().stream().filter(v -> String.valueOf(v.getRating()).equals(String.valueOf(s))).collect(Collectors.toList()).get(0)
             ).collect(Collectors.toList());
 
             for (Vote v : votes_filter) {
@@ -47,7 +47,7 @@ public class Summarized {
         /* Cria um novo item na lista com o reusltado da análise */
         User new_line = new User();
         new_line.setName((nome_algoritmo==null) ? "Sumaized" : nome_algoritmo);
-        new_line.setVote(list_vote_temp);
+        new_line.setVotes(list_vote_temp);
         list.add(new_line);
 
         return list;
@@ -60,7 +60,7 @@ public class Summarized {
             list = GetAll(list,nome_algoritmo);
 
             user_filter = list.stream().filter(p-> p.getName().equals((nome_algoritmo==null) ? "Sumaized" : nome_algoritmo)).collect(Collectors.toList()).get(0);
-            Object temp = user_filter.getVote().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
+            Object temp = user_filter.getVotes().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
             return ((Vote) temp);
 
         }

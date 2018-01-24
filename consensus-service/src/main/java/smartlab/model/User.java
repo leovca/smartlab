@@ -5,23 +5,23 @@ import java.util.List;
 public class User {
     
     
-    private String Name; /* Nome do usuáiro */
-    private List<Vote> Vote;  
+    private String name; /* Nome do usuáiro */
+    private List<Vote> votes;
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String Name) {
-        this.Name = Name;
+        this.name = Name;
     }
 
-    public List<Vote> getVote() {
-        return Vote;
+    public List<Vote> getVotes() {
+        return votes;
     }
 
-    public void setVote(List<Vote> Vote) {
-        this.Vote = Vote;
+    public void setVotes(List<Vote> Vote) {
+        this.votes = Vote;
     }
 
       

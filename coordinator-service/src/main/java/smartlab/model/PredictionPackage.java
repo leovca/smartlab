@@ -3,30 +3,30 @@ package smartlab.model;
 import java.util.List;
 
 public class PredictionPackage {
-    List<Vote> voteList;
-    Vote currente;
+    List<UserPreference> voteList;
+    UserPreference currente;
 
     public PredictionPackage() {
     }
 
-    public PredictionPackage(List<Vote> voteList, Vote currente) {
+    public PredictionPackage(List<UserPreference> voteList, UserPreference currente) {
         this.voteList = voteList;
         this.currente = currente;
     }
 
-    public List<Vote> getVoteList() {
+    public List<UserPreference> getVoteList() {
         return voteList;
     }
 
-    public void setVoteList(List<Vote> voteList) {
+    public void setVoteList(List<UserPreference> voteList) {
         this.voteList = voteList;
     }
 
-    public Vote getCurrente() {
+    public UserPreference getCurrente() {
         return currente;
     }
 
-    public void setCurrente(Vote currente) {
+    public void setCurrente(UserPreference currente) {
         this.currente = currente;
     }
 }

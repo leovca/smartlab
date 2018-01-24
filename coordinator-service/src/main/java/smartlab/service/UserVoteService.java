@@ -3,7 +3,7 @@ package smartlab.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import smartlab.intercom.EdgeClient;
-import smartlab.model.Vote;
+import smartlab.model.UserPreference;
 import smartlab.repository.VoteRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class UserVoteService {
 
     public void registerTemperatureVote(Integer userId, Integer userVote){
 
-        Vote vote = new Vote();
+        UserPreference vote = new UserPreference();
         vote.setUserId(userId);
         vote.setVote(userVote);
         vote.setExternalTemperature(edgeClient.externalTemperature());

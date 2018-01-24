@@ -1,81 +1,32 @@
 package smartlab.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Calendar;
-import java.util.Date;
-
-@Entity
+/* 
+    [rotulo]: Armazena o rotulo
+    [rating]: Armazena o valor da escala referente ao algoritmo de AM
+ */
 public class Vote {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idVote;
-    private Integer userId;
-    private Integer onlineUsers;
-    private Integer vote;
-    private Float externalTemperature;
-    private Float internalTemperature;
-    private Integer hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    //
+    private double rotulo;
+    private double rating;
 
-    private Date created = new Date();
 
-    public Integer getIdVote() {
-        return idVote;
+    public double getRotulo() {
+        return rotulo;
     }
 
-    public void setIdVote(Integer idVote) {
-        this.idVote = idVote;
+    public void setRotulo(double Vote) {
+        this.rotulo = Vote;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public double getRating() {
+        return rating;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setRating(double ScaleValue) {
+        this.rating = ScaleValue;
     }
 
-    public Integer getOnlineUsers() {
-        return onlineUsers;
-    }
-
-    public void setOnlineUsers(Integer onlineUsers) {
-        this.onlineUsers = onlineUsers;
-    }
-
-    public Integer getVote() {
-        return vote;
-    }
-
-    public void setVote(Integer vote) {
-        this.vote = vote;
-    }
-
-    public Float getExternalTemperature() {
-        return externalTemperature;
-    }
-
-    public void setExternalTemperature(Float externalTemperature) {
-        this.externalTemperature = externalTemperature;
-    }
-
-    public Float getInternalTemperature() {
-        return internalTemperature;
-    }
-
-    public void setInternalTemperature(Float internalTemperature) {
-        this.internalTemperature = internalTemperature;
-    }
-
-    public Integer getHour() {
-        return hour;
-    }
-
-    public void setHour(Integer hour) {
-        this.hour = hour;
-    }
-
+   
+    
 }

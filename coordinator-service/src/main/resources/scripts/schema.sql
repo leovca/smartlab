@@ -6,7 +6,7 @@ CREATE TABLE `coordinator_vote` (
   `online_users` int(11) DEFAULT NULL,
   `external_temperature` float DEFAULT NULL,
   `internal_temperature` float DEFAULT NULL,
-  `vote` int(11) DEFAULT NULL,
+  `preference` int(11) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `hour` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_vote`),

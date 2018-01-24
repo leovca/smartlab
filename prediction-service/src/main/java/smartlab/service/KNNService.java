@@ -1,9 +1,9 @@
 package smartlab.service;
 
 import org.springframework.stereotype.Service;
-import smartlab.model.Temperature;
-import smartlab.model.UserTemperatureProfile;
+import smartlab.model.Preference;
 import smartlab.model.Vote;
+import smartlab.model.UserTemperatureProfile;
 import weka.classifiers.Classifier;
 import weka.classifiers.lazy.IBk;
 import weka.core.Attribute;
@@ -36,24 +36,24 @@ public class KNNService {
 
 
 
-    private Instance makeInstance(Vote vote){
+    private Instance makeInstance(Preference preference){
         Instance instance = new DenseInstance(5);
-        instance.setValue(attrExternalTemperature, vote.getExternalTemperature());
-        instance.setValue(attrInternalTemperature, vote.getInternalTemperature());
-        instance.setValue(attrUsers, vote.getOnlineUsers());
-        instance.setValue(attrHour, vote.getHour());
-        instance.setValue(attrPref, vote.getVote().toString());
+        instance.setValue(attrExternalTemperature, preference.getExternalTemperature());
+        instance.setValue(attrInternalTemperature, preference.getInternalTemperature());
+        instance.setValue(attrUsers, preference.getOnlineUsers());
+        instance.setValue(attrHour, preference.getHour());
+        instance.setValue(attrPref, preference.getVote().toString());
         return instance;
     }
 
-    private Classifier buildModel(List<Vote> votes) throws Exception {
+    private Classifier buildModel(List<Preference> preferences) throws Exception {
 
-        Instances train = new Instances("dados", attributes, votes.size());
+        Instances train = new Instances("dados", attributes, preferences.size());
         train.setClassIndex(4);
 
         List<Instance> instances = new ArrayList<>();
 
-        votes.stream()
+        preferences.stream()
                 .map(this::makeInstance)
                 .forEach(instances::add);
 
@@ -65,32 +65,23 @@ public class KNNService {
         return ibk;
     }
 
-    private List<Temperature> getRatings(Classifier classifier, Instance instance) throws Exception {
-        List<Temperature> temperatures = new ArrayList<>();
+    private List<Vote> getRatings(Classifier classifier, Instance instance) throws Exception {
+        List<Vote> temperatures = new ArrayList<>();
         double[] values = classifier.distributionForInstance(instance);
 
         for (int i = 0; i < values.length; i++) {
-            temperatures.add(new Temperature(attrPref.value(i), values[i]));
+            temperatures.add(new Vote(attrPref.value(i), values[i]));
         }
         return temperatures;
     }
 
-    public UserTemperatureProfile calculateTemperatureProfile(List<Vote> voteList, Vote current) throws Exception {
+    public UserTemperatureProfile calculateTemperatureProfile(List<Preference> preferenceList, Preference current) throws Exception {
         UserTemperatureProfile userTemperatureProfile = new UserTemperatureProfile();
 
-//        if(voteList.size()>1){
-        Classifier classifier = buildModel(voteList);
+        Classifier classifier = buildModel(preferenceList);
         Instance currentInstance = makeInstance(current);
-        userTemperatureProfile.setTemperatures(getRatings(classifier, currentInstance));
-//        return userTemperatureProfile;
-//        } else if (voteList.size() == 1) {
-//            userTemperatureProfile.setTemperatures(new ArrayList<>());
-//            for (int i=16; i<31; i++){
-//                userTemperatureProfile.getTemperatures().add(new Temperature(String.valueOf(i), 0d));
-//            }
-//            int index = voteList.get(0).getVote() -16;
-//            userTemperatureProfile.getTemperatures().get(index).setRating(10d);
-//        }
+        userTemperatureProfile.setVotes(getRatings(classifier, currentInstance));
+
         return userTemperatureProfile;
     }
 

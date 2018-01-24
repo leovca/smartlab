@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
                 
         for (User user : list) {
             
-            order_votes = user.getVote().stream().map(v-> v.getRotulo()).sorted().collect(Collectors.toList());
+            order_votes = user.getVotes().stream().map(v-> v.getRotulo()).sorted().collect(Collectors.toList());
             
             for (Object v : (List<Object>) order_votes) {
              
@@ -74,7 +74,7 @@ import java.util.stream.Collectors;
                     
                     /* Atualzia os dados da lista original */
                     idx2=0;
-                    for (Vote v2 : user.getVote()) {
+                    for (Vote v2 : user.getVotes()) {
                         if (v2.getRotulo() == ((double) v)) {
                             v2.setRotulo(result);
                         }
@@ -111,7 +111,7 @@ import java.util.stream.Collectors;
             list = GetAll(list);
 
             user_filter = list.stream().filter(p-> p.getName().equals("BordaCount")).collect(Collectors.toList()).get(0);
-            Object temp = user_filter.getVote().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
+            Object temp = user_filter.getVotes().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
             return ((Vote) temp);
 
         }

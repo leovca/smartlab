@@ -4,13 +4,13 @@ import java.util.List;
 
 public class UserTemperatureProfile {
 
-    List<Temperature> temperatures;
+    List<Temperature> votes;
 
-    public List<Temperature> getTemperatures() {
-        return temperatures;
+    public List<Temperature> getVotes() {
+        return votes;
     }
 
-    public void setTemperatures(List<Temperature> temperatures) {
-        this.temperatures = temperatures;
+    public void setVotes(List<Temperature> votes) {
+        this.votes = votes;
     }
 }

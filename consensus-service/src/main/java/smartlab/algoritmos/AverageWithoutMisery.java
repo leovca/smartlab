@@ -55,7 +55,7 @@ public class AverageWithoutMisery extends Algorithms {
 
     @Override
     public Vote calcRecomendacao(List<User> list) {
-        return GetAll(list, 0.1);
+        return GetAll(list, 0.001);
     }
 
 

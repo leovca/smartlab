@@ -1,65 +1,31 @@
 package smartlab.model;
 
-
-import java.util.Date;
-
 public class Vote {
 
-    private Integer userId;
-    private Integer onlineUsers;
-    private Integer vote;
-    private Float externalTemperature;
-    private Float internalTemperature;
-    private Integer hour;
+    String rotulo;
+    Double rating;
 
-    private Date created = new Date();
-
-    public Integer getUserId() {
-        return userId;
+    public Vote() {
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public Vote(String rotulo, Double rating) {
+        this.rotulo = rotulo;
+        this.rating = rating;
     }
 
-    public Integer getOnlineUsers() {
-        return onlineUsers;
+    public Double getRating() {
+        return rating;
     }
 
-    public void setOnlineUsers(Integer onlineUsers) {
-        this.onlineUsers = onlineUsers;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
-    public Integer getVote() {
-        return vote;
+    public String getRotulo() {
+        return rotulo;
     }
 
-    public void setVote(Integer vote) {
-        this.vote = vote;
+    public void setRotulo(String rotulo) {
+        this.rotulo = rotulo;
     }
-
-    public Float getExternalTemperature() {
-        return externalTemperature;
-    }
-
-    public void setExternalTemperature(Float externalTemperature) {
-        this.externalTemperature = externalTemperature;
-    }
-
-    public Float getInternalTemperature() {
-        return internalTemperature;
-    }
-
-    public void setInternalTemperature(Float internalTemperature) {
-        this.internalTemperature = internalTemperature;
-    }
-
-    public Integer getHour() {
-        return hour;
-    }
-
-    public void setHour(Integer hour) {
-        this.hour = hour;
-    }
-
 }

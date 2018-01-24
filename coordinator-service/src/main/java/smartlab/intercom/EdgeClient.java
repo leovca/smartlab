@@ -18,5 +18,5 @@ public interface EdgeClient {
     Integer onlineUsers();
 
     @PostMapping("air/temperature")
-    void setAirTemperature(@RequestBody Integer temperature);
+    void setAirTemperature(@RequestBody Double temperature);
 }
