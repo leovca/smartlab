@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
                 
         for (User user : list) {
             
-            order_votes = user.getVote().stream().map(v-> v.getVote()).sorted().collect(Collectors.toList());
+            order_votes = user.getVote().stream().map(v-> v.getRotulo()).sorted().collect(Collectors.toList());
             
             for (Object v : (List<Object>) order_votes) {
              
@@ -75,8 +75,8 @@ import java.util.stream.Collectors;
                     /* Atualzia os dados da lista original */
                     idx2=0;
                     for (Vote v2 : user.getVote()) {
-                        if (v2.getVote() == ((double) v)) {
-                            v2.setVote(result);
+                        if (v2.getRotulo() == ((double) v)) {
+                            v2.setRotulo(result);
                         }
                         idx2+=1;
                     }
@@ -99,14 +99,19 @@ import java.util.stream.Collectors;
         return SUM.GetAll(list,"BordaCount");
         
     }
-    
-    public Vote GetResult(List<User> list) {
+
+     @Override
+     Vote getAll(List<User> usuarios) {
+         return null;
+     }
+
+     public Vote calcRecomendacao(List<User> list) {
         
             User user_filter;
             list = GetAll(list);
 
             user_filter = list.stream().filter(p-> p.getName().equals("BordaCount")).collect(Collectors.toList()).get(0);
-            Object temp = user_filter.getVote().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getVote())).get();
+            Object temp = user_filter.getVote().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
             return ((Vote) temp);
 
         }

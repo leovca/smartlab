@@ -6,6 +6,7 @@
 package smartlab.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
 /**
@@ -17,6 +18,13 @@ public class Recomendacao {
     private String nameAlgorithms;
     private Timestamp timeStamp;
     private Vote consenso;
+
+
+    public Recomendacao(String nameAlgorithms, Vote consenso) {
+        timeStamp = Timestamp.valueOf(LocalDateTime.now());
+        this.nameAlgorithms = nameAlgorithms;
+        this.consenso = consenso;
+    }
 
     /**
      * @return the timeStamp

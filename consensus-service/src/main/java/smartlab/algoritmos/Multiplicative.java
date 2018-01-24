@@ -20,24 +20,24 @@ public class Multiplicative extends Algorithms {
         List<Vote> list_vote_temp = new ArrayList<>();
 
         List<Double> scale = list.stream().map(p -> 
-                p.getVote().stream().map(v -> v.getScaleValue()).collect(Collectors.toList())
+                p.getVote().stream().map(v -> v.getRating()).collect(Collectors.toList())
         ).collect(Collectors.toList()).get(0);
         
         for (Object s : scale) {
 
             votes_filter = list.stream().map(p -> 
-                p.getVote().stream().filter( v -> String.valueOf(v.getScaleValue()).equals(String.valueOf(s))).collect(Collectors.toList()).get(0)
+                p.getVote().stream().filter( v -> String.valueOf(v.getRating()).equals(String.valueOf(s))).collect(Collectors.toList()).get(0)
             ).collect(Collectors.toList());
              
             for (Vote v : votes_filter) {
-                System.out.println(v.getVote());
-                if (v.getVote() > 0) { calc = calc * ((double) v.getVote());}
+                System.out.println(v.getRotulo());
+                if (v.getRotulo() > 0) { calc = calc * ((double) v.getRotulo());}
             }
             
             /* Adiciona resultdo da análise a lista de votos */
             vote_temp= new Vote();
-            vote_temp.setScaleValue((double) s);
-            vote_temp.setVote(calc);
+            vote_temp.setRating((double) s);
+            vote_temp.setRotulo(calc);
             list_vote_temp.add(vote_temp);
             calc=1;
          }
@@ -51,14 +51,19 @@ public class Multiplicative extends Algorithms {
         return list;
         
     }
-    
-    public Vote GetResult(List<User> list) {
+
+    @Override
+    Vote getAll(List<User> usuarios) {
+        return null;
+    }
+
+    public Vote calcRecomendacao(List<User> list) {
         
         User user_filter;
         list = GetAll(list);
 
         user_filter = list.stream().filter(p-> p.getName().equals("Multiplicative")).collect(Collectors.toList()).get(0);
-        Object temp = user_filter.getVote().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getVote())).get();
+        Object temp = user_filter.getVote().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
         return ((Vote) temp);
         
     }

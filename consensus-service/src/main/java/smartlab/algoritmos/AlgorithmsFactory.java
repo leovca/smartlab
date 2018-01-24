@@ -2,7 +2,7 @@ package smartlab.algoritmos;
 
 public class AlgorithmsFactory {
 
-        public Algorithms getAlgorithm(AlgorithmsType T) {
+        public static Algorithms getAlgorithm(AlgorithmsType T) {
         
                 if (T == AlgorithmsType.LeastMisery) {
                        return new LeastMisery();

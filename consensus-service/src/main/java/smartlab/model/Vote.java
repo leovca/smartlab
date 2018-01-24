@@ -1,29 +1,30 @@
 package smartlab.model;
 
 /* 
-    [Vote]: Armazena o rotulo
-    [ScaleValue]: Armazena o valor da escala referente ao algoritmo de AM
+    [rotulo]: Armazena o rotulo
+    [rating]: Armazena o valor da escala referente ao algoritmo de AM
  */
 public class Vote {
 
     //
-    private double Vote;
-    private double ScaleValue;
+    private double rotulo;
+    private double rating;
 
-    public double getVote() {
-        return Vote;
+
+    public double getRotulo() {
+        return rotulo;
     }
 
-    public void setVote(double Vote) {
-        this.Vote = Vote;
+    public void setRotulo(double Vote) {
+        this.rotulo = Vote;
     }
 
-    public double getScaleValue() {
-        return ScaleValue;
+    public double getRating() {
+        return rating;
     }
 
-    public void setScaleValue(double ScaleValue) {
-        this.ScaleValue = ScaleValue;
+    public void setRating(double ScaleValue) {
+        this.rating = ScaleValue;
     }
 
    
