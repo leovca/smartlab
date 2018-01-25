@@ -6,6 +6,7 @@ import smartlab.intercom.ConsensusClient;
 import smartlab.intercom.EdgeClient;
 import smartlab.intercom.PredictionClient;
 import smartlab.model.*;
+import smartlab.repository.RecomendacaoRepository;
 import smartlab.repository.VoteRepository;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class TemperatureService {
 
     @Autowired
     VoteRepository voteRepository;
+
+    @Autowired
+    RecomendacaoRepository recomendacaoRepository;
 
     private UserPreference getCurrent(){
         UserPreference vote = new UserPreference();
@@ -56,7 +60,8 @@ public class TemperatureService {
             edgeClient.shutdownAir();
         } else {
             Recomendacao finalTemperature = consensusClient.getNewTemperature(profiles, AlgorithmsType.AverageWithoutMisery);
-            edgeClient.setAirTemperature(finalTemperature.getConsenso().getRotulo());
+            edgeClient.setAirTemperature(finalTemperature.getConsenso());
+            recomendacaoRepository.save(finalTemperature);
         }
 
     }

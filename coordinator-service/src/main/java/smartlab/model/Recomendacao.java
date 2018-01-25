@@ -5,73 +5,57 @@
  */
 package smartlab.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
-/**
- *
- * @author Brenno Mello <brennodemello.bm at gmail.com>
- */
+@Entity
 public class Recomendacao {
-    
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String nameAlgorithms;
     private Timestamp timeStamp;
-    private Vote consenso;
+    private Double consenso;
+
 
     public Recomendacao() {
     }
 
-    public Recomendacao(String nameAlgorithms, Vote consenso) {
-        timeStamp = Timestamp.valueOf(LocalDateTime.now());
-        this.nameAlgorithms = nameAlgorithms;
-        this.consenso = consenso;
-    }
-
-    /**
-     * @return the timeStamp
-     */
-    public Timestamp getTimeStamp() {
-        return timeStamp;
-    }
-
-    /**
-     * @param timeStamp the timeStamp to set
-     */
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    /**
-     * @return the consenso
-     */
-    public Vote getConsenso() {
-        return consenso;
-    }
-
-    /**
-     * @param consenso the consenso to set
-     */
-    public void setConsenso(Vote consenso) {
-        this.consenso = consenso;
-    }
-
-    /**
-     * @return the nameAlgorithms
-     */
     public String getNameAlgorithms() {
         return nameAlgorithms;
     }
 
-    /**
-     * @param nameAlgorithms the nameAlgorithms to set
-     */
     public void setNameAlgorithms(String nameAlgorithms) {
         this.nameAlgorithms = nameAlgorithms;
     }
 
-   
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
 
-   
-  
+    public void setTimeStamp(Timestamp timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Double getConsenso() {
+        return consenso;
+    }
+
+    public void setConsenso(Double consenso) {
+        this.consenso = consenso;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
