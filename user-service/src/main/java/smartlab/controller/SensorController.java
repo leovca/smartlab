@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import smartlab.intercom.SensorClient;
 import smartlab.model.SensorData;
-import smartlab.repository.SensorDataRepository;
 
-import java.time.LocalDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -17,34 +18,51 @@ import java.util.List;
 public class SensorController {
 
     @Autowired
-    SensorDataRepository sensorDataRepository;
+    SensorClient sensorClient;
 
     @GetMapping("/internalTemperature")
     public Double internalTemperature(){
-        SensorData sensor = sensorDataRepository.findTopByIdSensorOrderByTimeDesc("tmp1");
-        return Double.valueOf(sensor.getValue());
+        return sensorClient.internalTemperature();
     }
 
     @GetMapping("/externalTemperature")
     public Double externalTemperature(){
-        SensorData sensor = sensorDataRepository.findTopByIdSensorOrderByTimeDesc("tmp2");
-        return Double.valueOf(sensor.getValue());
+        return sensorClient.externalTemperature();
     }
 
     @GetMapping("/sensor/{id}")
     public SensorData getActualSensorValue(@PathVariable("id") String id){
-        return sensorDataRepository.findTopByIdSensorOrderByTimeDesc(id);
+        return sensorClient.getActualSensorValue(id);
     }
 
     @GetMapping("/sensor/{id}/values")
     public List<SensorData> getAllSensorValue(String id){
-        return sensorDataRepository.findByIdSensorOrderByTimeDesc(id);
+        return sensorClient.getAllSensorValue(id);
     }
     @GetMapping("/sensor/{id}/values/date")
     public List<SensorData> getAllSensorValue(@RequestParam("startDate")  @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date dataInicial,
                                               @RequestParam("endDate")  @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date dataFinal,
                                               @PathVariable("id") String id){
-        return sensorDataRepository.findByIdSensorAndTimeBetween(id, dataInicial, dataFinal);
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        return sensorClient.getAllSensorValue(format.format(dataInicial), format.format(dataFinal), id);
     }
+
+    ////    conseno atual
+//    @GetMapping("/temperature/consensus")
+//    public List<SensorData> getTemperatureConsensus(){
+//        return sensorDataRepository.getSensorValuesByDate(id, dataInicial, dataFinal);
+//    }
+//
+////    Todos os votos de todos os usuarios
+//    @GetMapping("/temperature/votes")
+//    public List<SensorData> getAllVotes(@PathParam("startDate") String dataInicial,
+//                                              @PathParam("endDate") String dataFinal,
+//                                              ){
+//        return sensorDataRepository.getSensorValuesByDate(id, dataInicial, dataFinal);
+//    }
+
+
 
 }
