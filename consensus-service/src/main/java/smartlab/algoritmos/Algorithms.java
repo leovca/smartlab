@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Algorithms {
+
     abstract Vote getAll(List<User> usuarios);
 
     public Recomendacao getRecomendacao(List<User> usuarios){

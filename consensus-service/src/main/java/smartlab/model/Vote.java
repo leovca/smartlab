@@ -31,4 +31,8 @@ public class Vote {
         this.rotulo = rotulo;
         this.rating = rating;
     }
+
+    public Vote(){
+
+    }
 }

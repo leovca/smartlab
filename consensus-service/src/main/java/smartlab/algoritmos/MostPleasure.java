@@ -6,7 +6,7 @@ import smartlab.model.Vote;
 import java.util.List;
 
 public class MostPleasure extends Algorithms {
-    /* Takes the maximum of individual ratings */
+     /* Takes the maximum of individual ratings */
      public Vote getAll(List<User> list) {
         return list.stream()
                 .flatMap(user -> user.getVotes().stream())
