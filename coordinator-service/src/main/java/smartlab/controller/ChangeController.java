@@ -11,7 +11,7 @@ public class ChangeController {
     @Autowired
     TemperatureService temperatureService;
 
-    @GetMapping("changeDetected")
+    @GetMapping("/changeDetected")
     public void changeDetected(){
         temperatureService.updateTemperature();
     }

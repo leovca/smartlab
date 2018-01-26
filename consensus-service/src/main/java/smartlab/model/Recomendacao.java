@@ -23,6 +23,7 @@ public class Recomendacao {
     public Recomendacao(String nameAlgorithms, Double consenso) {
         timeStamp = Timestamp.valueOf(LocalDateTime.now());
         this.nameAlgorithms = nameAlgorithms;
+        this.consenso = consenso;
     }
 
     public String getNameAlgorithms() {

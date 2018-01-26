@@ -12,7 +12,7 @@ public interface UserPresenceRepository extends JpaRepository<UserPresence, Inte
 
     @Query(value = "select id_usuario from (select id_usuario, max(timestamp) \n" +
             "\tfrom user_presence up \n" +
-            "    where up.timestamp between timestamp(date_sub(now(), interval 2 minute)) and timestamp(now())\n" +
+            "    where up.timestamp between timestamp(date_sub(now(), interval 10 second)) and timestamp(now())\n" +
             "    group by id_usuario) as online_users",nativeQuery = true)
     List<Integer> queryOnlineUsers();
 //

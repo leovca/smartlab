@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -20,7 +21,7 @@ public class Recomendacao {
     private Long id;
 
     private String nameAlgorithms;
-    private Timestamp timeStamp;
+    private Date timeStamp;
     private Double consenso;
 
 
@@ -35,11 +36,11 @@ public class Recomendacao {
         this.nameAlgorithms = nameAlgorithms;
     }
 
-    public Timestamp getTimeStamp() {
+    public Date getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Timestamp timeStamp) {
+    public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
 

@@ -1,18 +1,26 @@
 package smartlab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import smartlab.model.UserPreference;
+import smartlab.repository.RecomendacaoRepository;
+import smartlab.repository.VoteRepository;
 import smartlab.service.TemperatureService;
 import smartlab.service.UserVoteService;
+
+import java.util.List;
 
 @RestController
 public class UserController {
 
     @Autowired
     private UserVoteService userVoteService;
+
+    @Autowired
+    private RecomendacaoRepository recomendacaoRepository;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Autowired
     private TemperatureService temperatureService;
@@ -25,5 +33,16 @@ public class UserController {
         userVoteService.registerTemperatureVote(userId, userVote);
         temperatureService.updateTemperature();
         return Boolean.TRUE;
+    }
+
+
+    @GetMapping("/consensus")
+    public Double getConsensus(){
+        return recomendacaoRepository.findTopByOrderByTimeStampDesc().getConsenso();
+    }
+
+    @GetMapping("/preferencias")
+    public List<UserPreference> preferencias(){
+        return voteRepository.findAll();
     }
 }

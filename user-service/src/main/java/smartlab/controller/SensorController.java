@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import smartlab.intercom.CoordiantorUserClient;
 import smartlab.intercom.SensorClient;
 import smartlab.model.SensorData;
+import smartlab.model.UserPreference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,6 +21,9 @@ public class SensorController {
 
     @Autowired
     SensorClient sensorClient;
+
+    @Autowired
+    CoordiantorUserClient coordiantorUserClient;
 
     @GetMapping("/internalTemperature")
     public Double internalTemperature(){
@@ -49,20 +54,15 @@ public class SensorController {
         return sensorClient.getAllSensorValue(format.format(dataInicial), format.format(dataFinal), id);
     }
 
-    ////    conseno atual
-//    @GetMapping("/temperature/consensus")
-//    public List<SensorData> getTemperatureConsensus(){
-//        return sensorDataRepository.getSensorValuesByDate(id, dataInicial, dataFinal);
-//    }
-//
-////    Todos os votos de todos os usuarios
-//    @GetMapping("/temperature/votes")
-//    public List<SensorData> getAllVotes(@PathParam("startDate") String dataInicial,
-//                                              @PathParam("endDate") String dataFinal,
-//                                              ){
-//        return sensorDataRepository.getSensorValuesByDate(id, dataInicial, dataFinal);
-//    }
+    @GetMapping("/temperature/consensus")
+    public Double getConsensus(){
+        return coordiantorUserClient.getConsensus();
+    }
 
+    @GetMapping("/temperature/votes")
+    public List<UserPreference> getAllVotes(){
+        return coordiantorUserClient.preferencias();
+    }
 
 
 }

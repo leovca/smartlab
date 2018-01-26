@@ -1,10 +1,12 @@
 package smartlab;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import smartlab.controller.socket.Ambiente;
 import smartlab.intercom.CoordiantorUserClient;
-import smartlab.model.UserPresence;
+import smartlab.repository.SensorDataRepository;
 import smartlab.repository.UserPresenceRepository;
 
 import java.util.ArrayList;
@@ -23,6 +25,13 @@ public class UserChangeCheckTask {
 
     List<Integer> usuarios;
 
+    @Autowired
+    SimpMessagingTemplate template;
+
+    @Autowired
+    SensorDataRepository sensorDataRepository;
+
+
     public UserChangeCheckTask() {
         this.usuarios = new ArrayList<>();
     }
@@ -36,6 +45,12 @@ public class UserChangeCheckTask {
             usuarios = currentList;
         }
 
+        this.template.convertAndSend("/topic/observer", new Ambiente(
+                sensorDataRepository.findTopByIdSensorOrderByTimeDesc("tmp2").getValue(),
+                sensorDataRepository.findTopByIdSensorOrderByTimeDesc("tmp1").getValue(),
+                coordiantorUserClient.getConsensus()));
+
+        this.template.convertAndSend("/topic/usuarios", this.usuarios);
     }
 
     private Boolean listasIguais(List list1, List list2) {

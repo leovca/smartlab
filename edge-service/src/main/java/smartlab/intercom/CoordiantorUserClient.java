@@ -13,4 +13,6 @@ public interface CoordiantorUserClient {
     @GetMapping("changeDetected")
     void changeDetected();
 
+    @GetMapping("/consensus")
+    Double getConsensus();
 }

@@ -9,6 +9,7 @@ import smartlab.model.*;
 import smartlab.repository.RecomendacaoRepository;
 import smartlab.repository.VoteRepository;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,13 +57,18 @@ public class TemperatureService {
                 .map(predictionClient::predictTemperature)
                 .collect(Collectors.toList());
 
+        Recomendacao recomendacao;
         if(profiles.isEmpty()){
             edgeClient.shutdownAir();
+            recomendacao = new Recomendacao();
+            recomendacao.setConsenso(null);
+            recomendacao.setTimeStamp(Calendar.getInstance().getTime());
         } else {
-            Recomendacao finalTemperature = consensusClient.getNewTemperature(profiles, AlgorithmsType.AverageWithoutMisery);
-            edgeClient.setAirTemperature(finalTemperature.getConsenso());
-            recomendacaoRepository.save(finalTemperature);
+            recomendacao = consensusClient.getNewTemperature(profiles, AlgorithmsType.AverageWithoutMisery);
+            edgeClient.setAirTemperature(recomendacao.getConsenso());
         }
+
+        recomendacaoRepository.save(recomendacao);
 
     }
 }
