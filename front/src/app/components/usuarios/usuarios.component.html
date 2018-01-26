@@ -1,0 +1,63 @@
+<div class="col-lg-6  col-md-6 col-sm-12">
+  <div class="card">
+    <div class="card-header" data-background-color="orange">
+      <h4 class="title"><i class="fa fa-users" aria-hidden="true" fa-5x></i> Usuários</h4>
+      <p class="category">Online</p>
+    </div>
+    <div class="card-content table-responsive">
+      <table class="table table-hover">
+        <thead class="text-warning">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let usuario of usuarios" (click)="setPreference(usuario)">
+          <td>{{usuario}}</td>
+          <td>Usuario_{{usuario}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-lg-6 col-md-6 col-sm-12">
+  <div class="card card-nav-tabs">
+    <div class="card-header" data-background-color="purple">
+      <h4 class="title"><i class="fa fa-users" aria-hidden="true" fa-5x></i> Usuários</h4>
+      <p class="category">Todos</p>
+    </div>
+
+    <div class="card-content">
+      <div class="tab-content">
+        <div class="tab-pane active" id="profile">
+          <table class="table">
+            <thead class="text-warning">
+            <tr>
+              <th>Online</th>
+              <th>Nome</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let usuario of todosUsuarios">
+              <td>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"
+                           value="{{usuario.getId()}}"
+                           [checked]="usuario.getCheckd()" (change)="usuario.toogle()">
+                  </label>
+                </div>
+              </td>
+              <td>Usuario_{{usuario.getId()}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
