@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import smartlab.algoritmos.*;
 import smartlab.model.Recomendacao;
 import smartlab.model.User;
+
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,75 +18,35 @@ public class ConsensusController {
     @PostMapping("calculateTemperature/{algorithmsType}")
     public Recomendacao getNewTemperature(@RequestBody List<User> listUser,
                               @PathVariable("algorithmsType") AlgorithmsType algorithmsType){
-        Algorithms algoritimo = AlgorithmsFactory.getAlgorithm(algorithmsType);
-        return algoritimo.getRecomendacao(listUser);
+        Algorithms algoritmo = AlgorithmsFactory.getAlgorithm(algorithmsType);
+        return algoritmo.getRecomendacao(listUser);
     }
 
 
-//    @PostMapping("calculateTemperatura/recommenderAll")
-//    public List<Recomendacao> getAllRecommendation(@RequestBody List<User> listUser){
-//
-//        AlgorithmsFactory factory = new AlgorithmsFactory();
-//        List<Recomendacao> listRecomendacao = new ArrayList<>();
-//
-//        Algorithms averageWith = factory.getAlgorithm(AlgorithmsType.AverageWithoutMisery);
-//        Vote voteaverageWith = averageWith.calcRecomendacao(listUser, 1);
-//
-//        Recomendacao avarageRecomendacao = new Recomendacao();
-//
-//        avarageRecomendacao.setNameAlgorithms(AlgorithmsType.AverageWithoutMisery.name());
-//        avarageRecomendacao.setConsenso(voteaverageWith);
-//        avarageRecomendacao.setTimeStamp(Timestamp.valueOf(LocalDateTime.now()));
-//
-//        listRecomendacao.add(avarageRecomendacao);
-//
-//        Algorithms borderCount = factory.getAlgorithm(AlgorithmsType.BorderCount);
-//        Vote voteborderCount = borderCount.calcRecomendacao(listUser);
-//
-//        Recomendacao borderRecomendacao = new Recomendacao();
-//
-//        borderRecomendacao.setNameAlgorithms(AlgorithmsType.BorderCount.name());
-//        borderRecomendacao.setConsenso(voteborderCount);
-//        borderRecomendacao.setTimeStamp(Timestamp.valueOf(LocalDateTime.now()));
-//
-//        listRecomendacao.add(borderRecomendacao);
-//
-//        Algorithms leastMisery = factory.getAlgorithm(AlgorithmsType.LeastMisery);
-//        Vote voteleastMisery = leastMisery.calcRecomendacao(listUser);
-//
-//        Recomendacao leastMiseryRecomendacao = new Recomendacao();
-//
-//        leastMiseryRecomendacao.setNameAlgorithms(AlgorithmsType.LeastMisery.name());
-//        leastMiseryRecomendacao.setConsenso(voteleastMisery);
-//        leastMiseryRecomendacao.setTimeStamp(Timestamp.valueOf(LocalDateTime.now()));
-//
-//        listRecomendacao.add(leastMiseryRecomendacao);
-//
-//        Algorithms mostPleasure = factory.getAlgorithm(AlgorithmsType.MostPleasure);
-//        Vote voteMostPleasure = mostPleasure.calcRecomendacao(listUser);
-//
-//        Recomendacao mostPleasureRecomendacao = new Recomendacao();
-//
-//        mostPleasureRecomendacao.setNameAlgorithms(AlgorithmsType.MostPleasure.name());
-//        mostPleasureRecomendacao.setConsenso(voteMostPleasure);
-//        mostPleasureRecomendacao.setTimeStamp(Timestamp.valueOf(LocalDateTime.now()));
-//
-//        listRecomendacao.add(mostPleasureRecomendacao);
-//
-//        Algorithms multiplicative = factory.getAlgorithm(AlgorithmsType.Multiplicative);
-//        Vote voteMultiplicative = multiplicative.calcRecomendacao(listUser);
-//
-//        Recomendacao multiplicativeRecomendacao = new Recomendacao();
-//
-//        multiplicativeRecomendacao.setNameAlgorithms(AlgorithmsType.Multiplicative.name());
-//        multiplicativeRecomendacao.setConsenso(voteMultiplicative);
-//        multiplicativeRecomendacao.setTimeStamp(Timestamp.valueOf(LocalDateTime.now()));
-//
-//        listRecomendacao.add(multiplicativeRecomendacao);
-//
-//        return listRecomendacao;
-//
-//    }
+      @PostMapping("calculateTemperature/recommenderAll")
+      public List<Recomendacao> getAllRecommendation(@RequestBody List<User> listUser){
+
+
+          List<Recomendacao> listRecomendacao = new ArrayList<>();
+
+          Algorithms averageWith = AlgorithmsFactory.getAlgorithm(AlgorithmsType.AverageWithoutMisery);
+          listRecomendacao.add(averageWith.getRecomendacao(listUser));
+
+          Algorithms leastMisery = AlgorithmsFactory.getAlgorithm(AlgorithmsType.LeastMisery);
+          listRecomendacao.add( leastMisery.getRecomendacao(listUser));
+
+          Algorithms mostPleasure = AlgorithmsFactory.getAlgorithm(AlgorithmsType.MostPleasure);
+          listRecomendacao.add(mostPleasure.getRecomendacao(listUser));
+
+          Algorithms multiplicative = AlgorithmsFactory.getAlgorithm(AlgorithmsType.Multiplicative);
+          listRecomendacao.add(multiplicative.getRecomendacao(listUser));
+
+          Algorithms borderCount = AlgorithmsFactory.getAlgorithm((AlgorithmsType.BorderCount));
+          listRecomendacao.add(borderCount.getRecomendacao(listUser));
+
+         return listRecomendacao;
+
+    }
 
 
 }
