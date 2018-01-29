@@ -6,9 +6,9 @@ spring:
     name: edge-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/smartlab_coordinator?useSSL=false
-    username: root
-    password: root
+    url: jdbc:mysql://nxvendas.cj3qd93dxn7t.sa-east-1.rds.amazonaws.com:3306/smartlab?useSSL=false
+    username: smartlab
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
@@ -25,9 +25,10 @@ spring:
   profiles: docker
 
   datasource:
-      url: jdbc:mysql://db:3306/db?useSSL=false
-      username: root
-      password: root
+    url: jdbc:mysql://nxvendas.cj3qd93dxn7t.sa-east-1.rds.amazonaws.com:3306/smartlab?useSSL=false
+    username: smartlab
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update

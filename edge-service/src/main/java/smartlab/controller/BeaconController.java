@@ -29,7 +29,7 @@ public class BeaconController {
 
     @GetMapping("/online")
     public List<Integer> online(){
-        return userPresenceRepository.queryOnlineUsers();
+        return userPresenceRepository.queryOnlineUsers(Calendar.getInstance().getTime());
     }
 
 
