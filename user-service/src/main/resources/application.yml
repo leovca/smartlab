@@ -9,6 +9,15 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 15000
+        readTimeout: 15000
+        loggerLevel: basic
 ---
 
 spring:
@@ -20,3 +29,11 @@ eureka:
       defaultZone: http://discovery:8761/eureka/
   instance:
     prefer-ip-address: true
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 15000
+        readTimeout: 15000
+        loggerLevel: basic
