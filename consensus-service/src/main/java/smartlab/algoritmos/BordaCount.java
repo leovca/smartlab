@@ -4,12 +4,12 @@ package smartlab.algoritmos;
 import smartlab.model.User;
 import smartlab.model.Vote;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
- public class BordaCount  extends Algorithms {
+
+public class BordaCount  extends Algorithms {
 
      /*
         Counts points from items’ rankings in
@@ -17,107 +17,81 @@ import java.util.stream.Collectors;
         bottom item getting 0 points, next one
         up getting one point, etc
      */
-     
-    public List<User>GetAll(List<User> list) {
-        
-        double point=0;
-        double sum_points=0;
-        double count_points=0;
-        long count_repeat;
-        double result;
-        
-        Integer idx1=0;
-        Integer idx2=0;
-        Integer idx3=0;
-        
-        List<Object> index_controle = new ArrayList<>();
-        Object order_votes;
-                
-        for (User user : list) {
-            
-            order_votes = user.getVotes().stream().map(v-> v.getRotulo()).sorted().collect(Collectors.toList());
-            
-            for (Object v : (List<Object>) order_votes) {
-             
-                final Integer I = idx1;
-                if (index_controle.stream().filter(p-> p.equals(I)).count() == 0) { /* Verifica se o valor já foi ajustado [index_controle: grava os indices que foram ajustados]  */
-                    
-                    /* Localiza repetições e grava os indices dos mesmos */
-                    count_repeat=0;idx3=0;
-                    for (Object v3 : (List<Object>) order_votes) {
-                        if (v3.equals(v)) {
-                            count_repeat+=1;
-                            index_controle.add(idx3);
-                        }
-                        idx3+=1;
-                    }
-                    
-                    /* Calculo da Borda */
-                    if (count_repeat>1) {
-                        sum_points=0;
-                        if (idx1==0){count_points=-1;} else {count_points = point;} /* Menor valor é semrpe zero */
-                        for (int c=1;c<count_repeat+1;c++) {
-                            count_points+=1;
-                            sum_points+=count_points;
-                        }
-                        result=((double) sum_points)/((double) count_repeat);
-                        point=count_repeat;
-                    } else {
-                        /* Menor valor é semrpe zero */
-                        if (idx1==0){
-                            result=0.0;
-                        } else {
-                            result=((double) point);
-                            point+=1;  
-                        }
-                    }
-                    
-                    /* Atualzia os dados da lista original */
-                    idx2=0;
-                    for (Vote v2 : user.getVotes()) {
-                        if (v2.getRotulo() == ((double) v)) {
-                            v2.setRotulo(result);
-                        }
-                        idx2+=1;
-                    }
-                }
-                idx1+=1;
-            }
-            /* Troca de usuário */
-            idx1=0;
-            sum_points=0;
-            count_points=0;
-            index_controle.clear();
-            point=0;
-   
-        }
-        /* Total */
-        AlgorithmsFactory f = new AlgorithmsFactory();
-        Summarized SUM;
-        SUM = new Summarized();
-        
-        return SUM.GetAll(list,"BordaCount");
-        
-    }
-
      @Override
-     Vote getAll(List<User> usuarios) {
-         return null;
+     public Vote getAll(List<User> usuarios) {
+
+
+         for (User user : usuarios) {
+             List<Vote> result = user.getVotes().stream().sorted(Comparator.comparing(Vote::getRating)).collect(Collectors.toList());
+             List<Vote> calc = new ArrayList<>();
+             for (int i=1; i <= result.size();i++) {
+                 double sum = 0;
+                 int count = 1;
+                 boolean media = false;
+                 Set<Integer> index = new HashSet<>();
+                     while (i < result.size() && result.get(i-1).getRating() == result.get(i).getRating()) {
+                         count++;
+                         index.add(i-1);
+                         index.add(i);
+                         i++;
+                         media = true;
+                     }
+
+
+                 if(media) {
+
+                     for (Integer indice : index) {
+                         sum += indice;
+                     }
+                     sum = sum/count;
+                     for (Integer ind : index) {
+                         Vote vote =  new Vote();
+                         vote.setRotulo(result.get(ind).getRotulo());
+                         vote.setRating(sum);
+                         calc.add(ind, vote);
+                     }
+
+                 }else{
+                       Vote vote =  new Vote();
+                       vote.setRotulo(result.get(i-1).getRotulo());
+                       vote.setRating(i-1);
+                       calc.add(i-1, vote);
+                     }
+             }
+             user.setVotes(calc);
+         }
+
+
+
+         return getMax(usuarios);
+
+
      }
 
-     public Vote calcRecomendacao(List<User> list) {
-        
-            User user_filter;
-            list = GetAll(list);
+     public Vote getMax(List<User> users) {
+         double sum;
 
-            user_filter = list.stream().filter(p-> p.getName().equals("BordaCount")).collect(Collectors.toList()).get(0);
-            Object temp = user_filter.getVotes().parallelStream().max(Comparator.comparing(p-> ((Vote) p).getRotulo())).get();
-            return ((Vote) temp);
+         List<Vote> ratingsToRotulo;
+         Vote voteMax = new Vote();
+         voteMax.setRating(0);
 
-        }
-        
-        
-    }
+         for (Double rotulo : getRotulos(users)) {
+             ratingsToRotulo = getVotesInRotulo(users, rotulo);
+
+             sum = 0;
+             for (Vote v : ratingsToRotulo) {
+                 sum += v.getRating();
+             }
+             if (sum >= voteMax.getRating()) {
+                 voteMax.setRating(sum);
+                 voteMax.setRotulo(rotulo);
+             }
+         }
+
+
+         return voteMax;
+     }
+ }
      
     
     
