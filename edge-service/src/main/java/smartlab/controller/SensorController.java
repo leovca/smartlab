@@ -2,14 +2,14 @@ package smartlab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import smartlab.model.SensorData;
+import smartlab.model.SensorType;
+import smartlab.model.Unit;
 import smartlab.repository.SensorDataRepository;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +45,30 @@ public class SensorController {
                                               @RequestParam("endDate")  @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date dataFinal,
                                               @PathVariable("id") String id){
         return sensorDataRepository.findByIdSensorAndTimeBetween(id, dataInicial, dataFinal);
+    }
+
+    @PostMapping("externalTemperature")
+    public void setExternalTemperature(@RequestBody Double temperature){
+        SensorData sensorData = new SensorData();
+        sensorData.setIdSensor("tmp2");
+        sensorData.setTime(Calendar.getInstance().getTime());
+        sensorData.setUnit(Unit.CELCIUS);
+        sensorData.setValue(String.valueOf(temperature));
+        sensorData.setSensorType(SensorType.TEMPERATURE);
+
+        sensorDataRepository.save(sensorData);
+    }
+
+    @PostMapping("internalTemperature")
+    public void setInternalTemperature(@RequestBody Double temperature){
+        SensorData sensorData = new SensorData();
+        sensorData.setIdSensor("tmp1");
+        sensorData.setTime(Calendar.getInstance().getTime());
+        sensorData.setUnit(Unit.CELCIUS);
+        sensorData.setValue(String.valueOf(temperature));
+        sensorData.setSensorType(SensorType.TEMPERATURE);
+
+        sensorDataRepository.save(sensorData);
     }
 
 }

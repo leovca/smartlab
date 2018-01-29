@@ -1,0 +1,59 @@
+<div class="col-lg-12  col-md-12 col-sm-12">
+  <div class="card">
+    <div class="card-header" data-background-color="blue">
+      <h4 class="title"><i class="fa fa-thermometer" aria-hidden="true" fa-5x></i> Simulador</h4>
+      <p class="category">Temperaturas</p>
+    </div>
+    <div class="card-content table-responsive">
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card card-stats">
+            <div class="card-header" data-background-color="orange">
+              <i class="fa fa-thermometer-half" aria-hidden="true"></i>
+            </div>
+            <div class="card-content">
+              <p class="category">Temperatura Externa</p>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <input type="checkbox"
+                         value="externa"
+                         [checked]="temperatureExterna" (change)="toogleTemperaturaExterna()">
+                </span>
+                <input type="number" max="30" min="16" value="16" class="form-control" [(ngModel)]="externa" aria-label="...">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card card-stats" >
+            <div class="card-header" data-background-color="green">
+              <i class="fa fa-thermometer-half" aria-hidden="true" fa-5x></i>
+            </div>
+            <div class="card-content">
+              <p class="category">Temperatura Interna</p>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <input type="checkbox"
+                         value="interna"
+                         [checked]="temperatureInterna" (change)="toogleTemperaturaInterna()">
+                </span>
+
+                <input type="number" max="30" min="16" value="16" class="form-control" aria-label="..." [(ngModel)]="interna">
+
+                <label> Usar temperatura do Ar
+                  <input type="checkbox" [checked]="temperatureInternaAr" (change)="temperatureInternaAr=!temperatureInternaAr">
+                </label>
+              </div><!-- /input-group -->
+            </div>
+          </div>
+
+        </div>
+
+
+      </div><!-- /.row -->
+
+    </div>
+  </div>
+</div>

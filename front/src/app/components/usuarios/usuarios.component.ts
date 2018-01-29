@@ -46,6 +46,10 @@ export class UsuariosComponent implements OnInit {
       new Usuario(2, this._http),
       new Usuario(3, this._http),
       new Usuario(4, this._http),
+      new Usuario(5, this._http),
+      new Usuario(6, this._http),
+      new Usuario(7, this._http),
+      new Usuario(8, this._http)
     ];
 
     this.subscription.map((message: Message) => {
