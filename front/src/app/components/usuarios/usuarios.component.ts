@@ -121,7 +121,6 @@ export class UsuariosComponent implements OnInit {
       console.log(this.chart.data["series"]);
 
       let background = ["#800080", "#000080", "#008080", "#008000", "#808000", "#323e4a", "#00FFFF", "#0000FF", "#FF00FF"];
-      let lineColors = ["#323e4a", "#323e4a","#323e4a","#323e4a","#323e4a","#323e4a","#323e4a","#323e4a"];
 
       let series = recomendacao.userTemperatureProfiles.reduce(function(anterior, atual, index){
         return anterior.concat({
