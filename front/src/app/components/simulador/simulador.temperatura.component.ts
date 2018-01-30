@@ -1,10 +1,6 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import {StompService, StompState} from '@stomp/ng2-stompjs';
-import {Message} from '@stomp/stompjs';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from '@angular/http';
-import { ModalDirective } from 'ngx-bootstrap/modal';
 import {AirService} from "../air.service";
 
 @Component({
@@ -13,7 +9,6 @@ import {AirService} from "../air.service";
   styleUrls: ['simulador.temperatura.component.css']
 })
 export class SimuladorTemperaturaComponent implements OnInit {
-  @ViewChild(ModalDirective) modal: ModalDirective;
 
   temperatureExterna: boolean = false;
   temperatureInterna: boolean = false;
