@@ -38,6 +38,17 @@ feign:
         connectTimeout: 15000
         readTimeout: 15000
         loggerLevel: basic
+
+---
+spring:
+  profiles: local
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartlab_coordinator?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
 ---
 
 spring:

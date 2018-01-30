@@ -28,6 +28,15 @@ feign:
         loggerLevel: basic
 
 ---
+spring:
+  profiles: local
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartlab_coordinator?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+---
 
 spring:
   profiles: docker

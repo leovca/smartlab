@@ -116,10 +116,6 @@ export class UsuariosComponent implements OnInit {
         userProfile.v = userProfile.v.map(this.normalize(minValue, maxValue))
       });
 
-      //this.chart.data["series"]=[];
-
-      console.log(this.chart.data["series"]);
-
       let background = ["#800080", "#000080", "#008080", "#008000", "#808000", "#323e4a", "#00FFFF", "#0000FF", "#FF00FF"];
 
       let series = recomendacao.userTemperatureProfiles.reduce(function(anterior, atual, index){
@@ -132,9 +128,6 @@ export class UsuariosComponent implements OnInit {
       },[]);
 
       this.chart.data["series"] = series;
-      console.log(series);
-
-      console.log(recomendacao)
     })
   }
 
