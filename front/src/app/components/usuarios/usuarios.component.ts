@@ -150,6 +150,9 @@ export class UsuariosComponent implements OnInit {
   normalize(min, max) {
   let delta = max - min;
   return function (val) {
+    if (delta == 0) {
+      return 0;
+    }
     return (val - min) / delta;
   };
 }

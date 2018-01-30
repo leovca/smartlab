@@ -37,11 +37,13 @@ public class KNNCustomClassifier extends IBk {
         Instances neighbours = m_NNSearch.kNearestNeighbours(instance, m_kNN);
         double [] distances = m_NNSearch.getDistances();
 
+        double [] allDistances = new double [m_NumClasses];
+
         for(int i = 0; i < m_NumClasses; i++) {
-            distances[i] = 1.0 / Math.max(1,m_Train.numInstances());
+            allDistances[i] = 1.0;
         }
 
-        return distances;
+        return allDistances;
 
     }
 }
