@@ -12,19 +12,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
     hibernate:
       ddl-auto: update
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type: TRACE
 
 eureka:
   client:
