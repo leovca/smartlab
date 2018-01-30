@@ -1,6 +1,7 @@
 package smartlab.service;
 
 import org.springframework.stereotype.Service;
+import smartlab.model.PredictionPackage;
 import smartlab.model.Preference;
 import smartlab.model.Vote;
 import smartlab.model.UserTemperatureProfile;
@@ -10,6 +11,8 @@ import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Normalize;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +49,7 @@ public class KNNService {
         return instance;
     }
 
-    private Classifier buildModel(List<Preference> preferences) throws Exception {
+    private Instances instances(List<Preference> preferences) throws Exception {
 
         Instances train = new Instances("dados", attributes, preferences.size());
         train.setClassIndex(4);
@@ -59,15 +62,16 @@ public class KNNService {
 
         train.addAll(instances);
 
-        Classifier ibk = new IBk(1);
-        ibk.buildClassifier(train);
+        Normalize normalizeFilter = new Normalize();
+        normalizeFilter.setInputFormat(train);
+        train = Filter.useFilter(train, normalizeFilter);
 
-        return ibk;
+        return train;
     }
 
-    private List<Vote> getRatings(Classifier classifier, Instance instance) throws Exception {
+    private List<Vote> getRatings(KNNCustomClassifier classifier, Instance instance) throws Exception {
         List<Vote> temperatures = new ArrayList<>();
-        double[] values = classifier.distributionForInstance(instance);
+        double[] values = classifier.getInverseDistances(instance);
 
         for (int i = 0; i < values.length; i++) {
             temperatures.add(new Vote(attrPref.value(i), values[i]));
@@ -75,13 +79,27 @@ public class KNNService {
         return temperatures;
     }
 
-    public UserTemperatureProfile calculateTemperatureProfile(List<Preference> preferenceList, Preference current) throws Exception {
+    public UserTemperatureProfile calculateTemperatureProfile(PredictionPackage predictionPackage) throws Exception {
+        List<Preference> preferenceList = predictionPackage.getVoteList();
+        Preference current = predictionPackage.getCurrente();
+
         UserTemperatureProfile userTemperatureProfile = new UserTemperatureProfile();
 
-        Classifier classifier = buildModel(preferenceList);
-        Instance currentInstance = makeInstance(current);
-        userTemperatureProfile.setVotes(getRatings(classifier, currentInstance));
+        int min = preferenceList.stream()
+                .map(preference -> preference.getVote())
+                .min(Integer::compareTo)
+                .get();
 
+        current.setVote(min);
+        preferenceList.add(current);
+
+        Instances instances  = instances(preferenceList);
+        Instance currentInstance = instances.remove(instances.numInstances()-1);
+        KNNCustomClassifier ibk = new KNNCustomClassifier(instances.size());
+        ibk.buildClassifier(instances);
+
+        userTemperatureProfile.setVotes(getRatings(ibk, currentInstance));
+        userTemperatureProfile.setIdUsuario(predictionPackage.getIdUsuario());
         return userTemperatureProfile;
     }
 

@@ -5,24 +5,18 @@
  */
 package smartlab.model;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
-@Entity
 public class Recomendacao {
 
-    @Id
-    @GeneratedValue
+
     private Long id;
 
     private String nameAlgorithms;
     private Date timeStamp;
     private Double consenso;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "recomendacao_id")
     List<UserTemperatureProfile> userTemperatureProfiles;
 
     public Recomendacao() {

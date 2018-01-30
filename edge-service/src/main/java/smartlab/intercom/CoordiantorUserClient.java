@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import smartlab.model.Recomendacao;
 
 @FeignClient("coordinator-service")
 public interface CoordiantorUserClient {
@@ -15,4 +16,7 @@ public interface CoordiantorUserClient {
 
     @GetMapping("/consensus")
     Double getConsensus();
+
+    @GetMapping("/consensusWithProfiles")
+    Recomendacao getConsensusWithProfile();
 }

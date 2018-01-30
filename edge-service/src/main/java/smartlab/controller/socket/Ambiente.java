@@ -1,17 +1,26 @@
 package smartlab.controller.socket;
 
+import smartlab.model.Recomendacao;
+
 public class Ambiente {
     private String external;
     private String internal;
     private Double airTemp;
+    private Recomendacao recomendacao;
 
-    public Ambiente(String external, String internal, Double airTemp) {
+    public Ambiente(String external, String internal, Double airTemp, Recomendacao recomendacao) {
         this.external = external;
         this.internal = internal;
         this.airTemp = airTemp;
+        this.recomendacao = recomendacao;
     }
 
-    public Ambiente() {
+    public Recomendacao getRecomendacao() {
+        return recomendacao;
+    }
+
+    public void setRecomendacao(Recomendacao recomendacao) {
+        this.recomendacao = recomendacao;
     }
 
     public String getExternal() {

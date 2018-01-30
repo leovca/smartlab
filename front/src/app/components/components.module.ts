@@ -8,7 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AmbienteComponent } from './ambiente/ambiente.component';
 import { SimuladorTemperaturaComponent } from './simulador/simulador.temperatura.component';
+import {  ZingChart } from './usuarios/zing.chart';
 import { AirService } from './air.service';
+import { RecomendacaoService } from './recomendacao.service';
 
 @NgModule({
   imports: [
@@ -21,16 +23,19 @@ import { AirService } from './air.service';
     LoaderComponent,
     UsuariosComponent,
     AmbienteComponent,
-    SimuladorTemperaturaComponent
+    SimuladorTemperaturaComponent,
+    ZingChart
   ],
   exports: [
     LoaderComponent,
     UsuariosComponent,
     AmbienteComponent,
-    SimuladorTemperaturaComponent
+    SimuladorTemperaturaComponent,
+    ZingChart
   ],
   providers: [
-    AirService
+    AirService,
+    RecomendacaoService
   ]
 })
 export class ComponentsModule { }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import smartlab.intercom.CoordiantorUserClient;
 import smartlab.intercom.SensorClient;
+import smartlab.model.Recomendacao;
 import smartlab.model.SensorData;
 import smartlab.model.UserPreference;
 
@@ -64,5 +65,9 @@ public class SensorController {
         return coordiantorUserClient.preferencias();
     }
 
+    @GetMapping("/temperature/consensusWithProfiles")
+    Recomendacao getConsensusWithProfile(){
+        return coordiantorUserClient.getConsensusWithProfile();
+    }
 
 }

@@ -68,6 +68,7 @@ public class TemperatureService {
             edgeClient.setAirTemperature(recomendacao.getConsenso());
         }
 
+        recomendacao.setUserTemperatureProfiles(profiles);
         recomendacaoRepository.save(recomendacao);
 
     }

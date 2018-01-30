@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import smartlab.model.Recomendacao;
 import smartlab.model.UserPreference;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface CoordiantorUserClient {
 
     @GetMapping("/preferencias")
     List<UserPreference> preferencias();
+
+    @GetMapping("/consensusWithProfiles")
+    Recomendacao getConsensusWithProfile();
 }

@@ -1,12 +1,8 @@
 package smartlab.model;
 
-import javax.persistence.*;
 
-@Entity(name = "temperature_rating")
 public class Temperature {
 
-    @Id
-    @GeneratedValue
     private Integer id;
 
     Double rotulo;

@@ -2,6 +2,7 @@ package smartlab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import smartlab.model.Recomendacao;
 import smartlab.model.UserPreference;
 import smartlab.repository.RecomendacaoRepository;
 import smartlab.repository.VoteRepository;
@@ -39,6 +40,11 @@ public class UserController {
     @GetMapping("/consensus")
     public Double getConsensus(){
         return recomendacaoRepository.findTopByOrderByTimeStampDesc().getConsenso();
+    }
+
+    @GetMapping("/consensusWithProfiles")
+    public Recomendacao getConsensusWithProfile(){
+        return recomendacaoRepository.findTopByOrderByTimeStampDesc();
     }
 
     @GetMapping("/preferencias")

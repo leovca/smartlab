@@ -4,6 +4,7 @@ import {StompService, StompState} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
 import 'rxjs/add/operator/map';
 import {AirService} from "../air.service";
+import {RecomendacaoService} from "../recomendacao.service";
 
 @Component({
   selector: 'ambiente',
@@ -17,7 +18,7 @@ export class AmbienteComponent implements OnInit {
 
   public state: Observable<string>;
 
-  constructor(private _stompService: StompService, private _airService: AirService) { }
+  constructor(private _stompService: StompService, private _airService: AirService, private _recomendacaoService : RecomendacaoService) { }
 
   valor: any = {
     external: "--",
@@ -42,6 +43,10 @@ export class AmbienteComponent implements OnInit {
         this._airService.setTemperature(this.valor.airTemp);
       } else {
         this._airService.setTemperature(this.valor.external);
+      }
+
+      if(this.valor.recomendacao){
+        this._recomendacaoService.setRecomencadao(this.valor.recomendacao);
       }
     });
   }

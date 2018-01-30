@@ -5,8 +5,17 @@ import java.util.List;
 public class PredictionPackage {
     List<Preference> voteList;
     Preference currente;
+    Integer idUsuario;
 
     public PredictionPackage() {
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public List<Preference> getVoteList() {

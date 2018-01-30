@@ -16,7 +16,7 @@ public class PredictionController {
 
     @PostMapping("/predict")
     public UserTemperatureProfile predictTemperature(@RequestBody PredictionPackage dados) throws Exception {
-        return knnService.calculateTemperatureProfile(dados.getVoteList(), dados.getCurrente());
+        return knnService.calculateTemperatureProfile(dados);
     }
 
 }

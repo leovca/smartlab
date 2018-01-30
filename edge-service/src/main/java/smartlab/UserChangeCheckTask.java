@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import smartlab.controller.socket.Ambiente;
 import smartlab.intercom.CoordiantorUserClient;
+import smartlab.model.Recomendacao;
 import smartlab.repository.SensorDataRepository;
 import smartlab.repository.UserPresenceRepository;
 
@@ -50,10 +51,12 @@ public class UserChangeCheckTask {
         }
 
         try {
+            Recomendacao recomendacao = coordiantorUserClient.getConsensusWithProfile();
             this.template.convertAndSend("/topic/observer", new Ambiente(
                     sensorDataRepository.findTopByIdSensorOrderByTimeDesc("tmp2").getValue(),
                     sensorDataRepository.findTopByIdSensorOrderByTimeDesc("tmp1").getValue(),
-                    coordiantorUserClient.getConsensus()));
+                    recomendacao.getConsenso(),
+                    recomendacao));
         } catch (Exception ex){
             log.error(ex);
         }
