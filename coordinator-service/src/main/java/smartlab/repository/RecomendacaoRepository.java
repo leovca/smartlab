@@ -10,6 +10,6 @@ import java.util.List;
 public interface RecomendacaoRepository extends JpaRepository<Recomendacao, String> {
 
 
-    Recomendacao findTopByOrderByTimeStampDesc();
+    Recomendacao findTopByOrderByIdDesc();
 
 }

@@ -39,12 +39,12 @@ public class UserController {
 
     @GetMapping("/consensus")
     public Double getConsensus(){
-        return recomendacaoRepository.findTopByOrderByTimeStampDesc().getConsenso();
+        return recomendacaoRepository.findTopByOrderByIdDesc().getConsenso();
     }
 
     @GetMapping("/consensusWithProfiles")
     public Recomendacao getConsensusWithProfile(){
-        return recomendacaoRepository.findTopByOrderByTimeStampDesc();
+        return recomendacaoRepository.findTopByOrderByIdDesc();
     }
 
     @GetMapping("/preferencias")
