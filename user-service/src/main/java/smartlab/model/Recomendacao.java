@@ -5,11 +5,11 @@
  */
 package smartlab.model;
 
+
 import java.util.Date;
-import java.util.List;
+
 
 public class Recomendacao {
-
 
     private Long id;
 
@@ -17,17 +17,13 @@ public class Recomendacao {
     private Date timeStamp;
     private Double consenso;
 
-    List<UserTemperatureProfile> userTemperatureProfiles;
-
     public Recomendacao() {
     }
 
-    public List<UserTemperatureProfile> getUserTemperatureProfiles() {
-        return userTemperatureProfiles;
-    }
-
-    public void setUserTemperatureProfiles(List<UserTemperatureProfile> userTemperatureProfiles) {
-        this.userTemperatureProfiles = userTemperatureProfiles;
+    public Recomendacao(String nameAlgorithms, Date timeStamp, Double consenso) {
+        this.nameAlgorithms = nameAlgorithms;
+        this.timeStamp = timeStamp;
+        this.consenso = consenso;
     }
 
     public String getNameAlgorithms() {

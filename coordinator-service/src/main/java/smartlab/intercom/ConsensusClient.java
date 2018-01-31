@@ -16,4 +16,8 @@ public interface ConsensusClient {
     @PostMapping("calculateTemperature/{algorithmsType}")
     Recomendacao getNewTemperature(@RequestBody List<UserTemperatureProfile> listUser,
                                           @PathVariable("algorithmsType") AlgorithmsType algorithmsType);
+
+
+    @PostMapping("calculateTemperature/recommenderAll")
+    List<Recomendacao> getAllRecommendation(@RequestBody List<UserTemperatureProfile> listUser);
 }

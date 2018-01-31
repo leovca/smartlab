@@ -10,6 +10,8 @@ import { PagesModule } from './pages/pages.module';
 import { AppComponent } from './app.component';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 
+import { ChartsModule } from 'ng2-charts';
+
 const stompConfig: StompConfig = {
   // Which server?
   url: 'ws://localhost:8732/ws/websocket',
@@ -42,6 +44,7 @@ const stompConfig: StompConfig = {
     RouterModule,
     AppRoutingModule,
     PagesModule,
+    ChartsModule
   ],
   providers: [
     StompService,

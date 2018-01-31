@@ -13,7 +13,7 @@ public abstract class Algorithms {
 
     public Recomendacao getRecomendacao(List<User> usuarios){
         Recomendacao recomendacao =
-                new Recomendacao(this.getClass().getName(),
+                new Recomendacao(this.getClass().getSimpleName(),
                                         this.calcRecomendacao(usuarios).getRotulo());
 
         return recomendacao;

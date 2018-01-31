@@ -1,0 +1,54 @@
+<div class="col-lg-12  col-md-12 col-sm-12">
+  <div class="card">
+    <div class="card-header" data-background-color="red">
+      <h4 class="title"><i class="fa fa-cog" aria-hidden="true" fa-5x></i> Configurações</h4>
+      <!--<p class="category">Temperaturas</p>-->
+    </div>
+    <div class="card-content table-responsive">
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card card-stats">
+            <div class="card-content">
+              <p class="category">Gerar Preferência (Consenso)</p>
+              <div class="input-group">
+                <select name="teste" id="">
+                  <option value="0">Menor Distância</option>
+                  <option value="1">KNN com suavização</option>
+                </select>
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card card-stats">
+            <div class="card-content">
+              <p class="category">Algortimo </p>
+              <div class="input-group">
+                <select [(ngModel)]="algorimo">
+                  <option value="LeastMisery">Least Misery</option>
+                  <option value="AverageWithoutMisery">Average Without Misery</option>
+                  <option value="Multiplicative">Multiplicative</option>
+                  <option value="MostPleasure">Most Pleasure</option>
+                  <option value="BorderCount">Border Count</option>
+                  <option value="Knn">Knn</option>
+                </select>
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card card-stats">
+            <div class="card-content">
+              <button (click)="salvarConfiguracao()">Aplicar</button>
+            </div><!-- /.col-lg-6 -->
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,9 +2,12 @@ package smartlab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import smartlab.model.Configuracao;
 import smartlab.model.Recomendacao;
+import smartlab.model.RecomendacaoPackage;
 import smartlab.model.UserPreference;
-import smartlab.repository.RecomendacaoRepository;
+import smartlab.repository.ConfiguracaoRepository;
+import smartlab.repository.RecomendacaoPackageRepository;
 import smartlab.repository.VoteRepository;
 import smartlab.service.TemperatureService;
 import smartlab.service.UserVoteService;
@@ -18,13 +21,16 @@ public class UserController {
     private UserVoteService userVoteService;
 
     @Autowired
-    private RecomendacaoRepository recomendacaoRepository;
+    private RecomendacaoPackageRepository recomendacaoPackageRepository;
 
     @Autowired
     private VoteRepository voteRepository;
 
     @Autowired
     private TemperatureService temperatureService;
+
+    @Autowired
+    private ConfiguracaoRepository configuracaoRepository;
 
     @PostMapping("user/{userId}/temperature")
     public Boolean receiverTemperatureVote(@PathVariable("userId") Integer userId, @RequestBody Integer userVote){
@@ -39,16 +45,28 @@ public class UserController {
 
     @GetMapping("/consensus")
     public Double getConsensus(){
-        return recomendacaoRepository.findTopByOrderByIdDesc().getConsenso();
+        return recomendacaoPackageRepository.findTopByOrderByIdDesc()
+                .getTemperaturaUtilizada();
     }
 
     @GetMapping("/consensusWithProfiles")
-    public Recomendacao getConsensusWithProfile(){
-        return recomendacaoRepository.findTopByOrderByIdDesc();
+    public RecomendacaoPackage getConsensusWithProfile(){
+        RecomendacaoPackage recomendacaoPackage =  recomendacaoPackageRepository
+                .findTopByOrderByIdDesc();
+
+        recomendacaoPackage.getUserTemperatureProfiles();
+
+        return recomendacaoPackage;
     }
 
     @GetMapping("/preferencias")
     public List<UserPreference> preferencias(){
         return voteRepository.findAll();
+    }
+
+
+    @PostMapping("/setConfig")
+    public void setConfiguracao(@RequestBody Configuracao configuracao){
+        configuracaoRepository.save(configuracao);
     }
 }

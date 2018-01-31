@@ -78,7 +78,7 @@ public class KNNCustomClassifier extends IBk {
                 })
                 .map(aDouble -> normalise(aDouble, min, max + 2))
 //                .map(aDouble -> normalise(aDouble, min, max + (max-min)))
-                .map(aDouble -> reverseNumber(aDouble, 0d, 1d))
+                .map(aDouble -> reverseNumber(aDouble, 0.01d, 1d))
                 .collect(Collectors.toList())
                 .toArray(new Double[allDistances.length]);
 

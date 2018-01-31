@@ -10,11 +10,21 @@ public class UserTemperatureProfile {
     @GeneratedValue
     private Integer id;
 
+    private Double temperatura;
+
     private Integer idUsuario;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_prefile_id")
     List<Temperature> votes;
+
+    public Double getTemperatura() {
+        return temperatura;
+    }
+
+    public void setTemperatura(Double temperatura) {
+        this.temperatura = temperatura;
+    }
 
     public Integer getIdUsuario() {
         return idUsuario;
