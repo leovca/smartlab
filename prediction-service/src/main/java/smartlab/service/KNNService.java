@@ -1,10 +1,7 @@
 package smartlab.service;
 
 import org.springframework.stereotype.Service;
-import smartlab.model.PredictionPackage;
-import smartlab.model.Preference;
-import smartlab.model.Vote;
-import smartlab.model.UserTemperatureProfile;
+import smartlab.model.*;
 import weka.classifiers.Classifier;
 import weka.classifiers.lazy.IBk;
 import weka.core.Attribute;
@@ -26,8 +23,11 @@ public class KNNService {
     private Attribute attrInternalTemperature = new Attribute("internalTemperature");
     private Attribute attrUsers = new Attribute("users");
     private Attribute attrHour = new Attribute("hour");
+
     private Attribute attrPref = new Attribute("pref", Arrays.asList(
             new String[]{"16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"}));
+
+    private Attribute attrPref2 = new Attribute("pref");
 
     private ArrayList<Attribute> attributes = new ArrayList<Attribute>() {{
         add(attrExternalTemperature);
@@ -35,6 +35,14 @@ public class KNNService {
         add(attrUsers);
         add(attrHour);
         add(attrPref);
+    }};
+
+    private ArrayList<Attribute> attributes2 = new ArrayList<Attribute>() {{
+        add(attrExternalTemperature);
+        add(attrInternalTemperature);
+        add(attrUsers);
+        add(attrHour);
+        add(attrPref2);
     }};
 
 
@@ -46,6 +54,16 @@ public class KNNService {
         instance.setValue(attrUsers, preference.getOnlineUsers());
         instance.setValue(attrHour, preference.getHour());
         instance.setValue(attrPref, preference.getVote().toString());
+        return instance;
+    }
+
+    private Instance makeInstance2(Preference preference){
+        Instance instance = new DenseInstance(5);
+        instance.setValue(attrExternalTemperature, preference.getExternalTemperature());
+        instance.setValue(attrInternalTemperature, preference.getInternalTemperature());
+        instance.setValue(attrUsers, preference.getOnlineUsers());
+        instance.setValue(attrHour, preference.getHour());
+        instance.setValue(attrPref2, preference.getVote());
         return instance;
     }
 
@@ -69,6 +87,26 @@ public class KNNService {
         return train;
     }
 
+    private Instances instances2(List<Preference> preferences) throws Exception {
+
+        Instances train = new Instances("dados", attributes2, preferences.size());
+        train.setClassIndex(4);
+
+        List<Instance> instances = new ArrayList<>();
+
+        preferences.stream()
+                .map(this::makeInstance2)
+                .forEach(instances::add);
+
+        train.addAll(instances);
+
+        Normalize normalizeFilter = new Normalize();
+        normalizeFilter.setInputFormat(train);
+        train = Filter.useFilter(train, normalizeFilter);
+
+        return train;
+    }
+
     private List<Vote> getRatings(KNNCustomClassifier classifier, Instance instance) throws Exception {
         List<Vote> temperatures = new ArrayList<>();
         double[] values = classifier.getInverseDistances(instance);
@@ -77,6 +115,18 @@ public class KNNService {
             temperatures.add(new Vote(attrPref.value(i), values[i]));
         }
         return temperatures;
+    }
+
+    private List<Vote> getRatingsSuavizados(Double temperatura, Double suavizacao) throws Exception {
+        List<Vote> temperaturas = new ArrayList<>();
+
+        for (int i = 0; i < 14; i++) {
+            double temp = i+16;
+
+            temperaturas.add(new Vote(attrPref.value(i), Math.pow(suavizacao,Math.abs(temp - temperatura))));
+        }
+
+        return temperaturas;
     }
 
     public UserTemperatureProfile calculateTemperatureProfile(PredictionPackage predictionPackage) throws Exception {
@@ -98,8 +148,25 @@ public class KNNService {
         KNNCustomClassifier ibk = new KNNCustomClassifier(instances.size());
         ibk.buildClassifier(instances);
 
-        userTemperatureProfile.setVotes(getRatings(ibk, currentInstance));
+        if(predictionPackage.getAlgortimoPreference().equals(AlgortimoPreference.Distancia)) {
+            userTemperatureProfile.setVotes(getRatings(ibk, currentInstance));
+        }
+
         userTemperatureProfile.setIdUsuario(predictionPackage.getIdUsuario());
+
+        instances  = instances2(preferenceList);
+        currentInstance = instances.remove(instances.numInstances()-1);
+        Classifier classifier = new IBk(predictionPackage.getKnn());
+        classifier.buildClassifier(instances);
+        classifier.classifyInstance(currentInstance);
+
+//        userTemperatureProfile.setTemperatura(Double.valueOf(currentInstance.toString(attrPref2)));
+        userTemperatureProfile.setTemperatura(classifier.classifyInstance(currentInstance));
+
+        if(predictionPackage.getAlgortimoPreference().equals(AlgortimoPreference.Suavizacao)) {
+            userTemperatureProfile.setVotes(getRatingsSuavizados(userTemperatureProfile.getTemperatura(), predictionPackage.getSuavizacao()));
+        }
+
         return userTemperatureProfile;
     }
 

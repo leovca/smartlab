@@ -21,19 +21,13 @@ public class Recomendacao {
     private Date timeStamp;
     private Double consenso;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "recomendacao_id")
-    List<UserTemperatureProfile> userTemperatureProfiles;
-
     public Recomendacao() {
     }
 
-    public List<UserTemperatureProfile> getUserTemperatureProfiles() {
-        return userTemperatureProfiles;
-    }
-
-    public void setUserTemperatureProfiles(List<UserTemperatureProfile> userTemperatureProfiles) {
-        this.userTemperatureProfiles = userTemperatureProfiles;
+    public Recomendacao(String nameAlgorithms, Date timeStamp, Double consenso) {
+        this.nameAlgorithms = nameAlgorithms;
+        this.timeStamp = timeStamp;
+        this.consenso = consenso;
     }
 
     public String getNameAlgorithms() {

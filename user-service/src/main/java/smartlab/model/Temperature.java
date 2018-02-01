@@ -1,6 +1,7 @@
 package smartlab.model;
 
 
+
 public class Temperature {
 
     private Integer id;

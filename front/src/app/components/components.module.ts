@@ -7,31 +7,32 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AmbienteComponent } from './ambiente/ambiente.component';
+import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 import { SimuladorTemperaturaComponent } from './simulador/simulador.temperatura.component';
-import {  ZingChart } from './usuarios/zing.chart';
 import { AirService } from './air.service';
 import { RecomendacaoService } from './recomendacao.service';
-
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    BrowserModule
+    BrowserModule,
+    ChartsModule
   ],
   declarations: [
     LoaderComponent,
     UsuariosComponent,
     AmbienteComponent,
     SimuladorTemperaturaComponent,
-    ZingChart
+    ConfiguracoesComponent
   ],
   exports: [
     LoaderComponent,
     UsuariosComponent,
     AmbienteComponent,
     SimuladorTemperaturaComponent,
-    ZingChart
+    ConfiguracoesComponent
   ],
   providers: [
     AirService,

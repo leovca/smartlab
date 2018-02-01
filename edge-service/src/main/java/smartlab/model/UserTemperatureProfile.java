@@ -1,14 +1,27 @@
 package smartlab.model;
 
+import javax.persistence.*;
 import java.util.List;
+
 
 public class UserTemperatureProfile {
 
+
     private Integer id;
+
+    private Double temperatura;
 
     private Integer idUsuario;
 
     List<Temperature> votes;
+
+    public Double getTemperatura() {
+        return temperatura;
+    }
+
+    public void setTemperatura(Double temperatura) {
+        this.temperatura = temperatura;
+    }
 
     public Integer getIdUsuario() {
         return idUsuario;
