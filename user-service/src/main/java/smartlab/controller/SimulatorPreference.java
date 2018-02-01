@@ -15,7 +15,7 @@ public class SimulatorPreference {
     public List<UserPreference> putData(){
         List<UserPreference> userPreferences = new ArrayList<>();
         Random randomGaus =  new Random();
-        boolean perfil = false;
+        boolean perfil = true;
 
         for (int i=1; i <= 8; i++) {
 
@@ -46,23 +46,30 @@ public class SimulatorPreference {
                 do {
                     onlineUSer = randomGaus.nextGaussian() * 1 + 4;
                 } while (onlineUSer <= 0);
+
                 System.out.println("Usuarios online: "+ (int) onlineUSer);
                 user.setOnlineUsers((int) onlineUSer);
 
 
                 int vote;
                 if(perfil) {
-                    vote =  randomGaus.nextInt(10) + 16;
+                    vote =  perfilFrio(user.getInternalTemperature(), user.getExternalTemperature());
                     user.setVote(vote);
-                    perfil = false;
+
                 }else{
-                    vote = randomGaus.nextInt(10) + 16;
+                    vote = perfilQuente(user.getInternalTemperature(), user.getExternalTemperature());
                     user.setVote(vote);
-                    perfil = true;
+
                 }
 
                 System.out.println("Voto: "+ vote);
                 userPreferences.add(user);
+            }
+
+            if(perfil) {
+                perfil = false;
+            }else{
+                perfil = true;
             }
         }
 
@@ -77,12 +84,12 @@ public class SimulatorPreference {
     public int perfilFrio(double internal, double external){
         Random random =  new Random();
 
-        int vote;
-        if(external <= 22 && internal <= 22 )
-            vote = random.nextInt(30);
+        int vote = (int) internal;
+        if(internal <= 22) {
+            vote = random.nextInt(7) + 23;
+        }
 
-
-        return 0;
+        return vote;
     }
 
     /*
@@ -91,11 +98,18 @@ public class SimulatorPreference {
      26 - 30 quente
      */
     public int perfilQuente(double internal, double external){
+        Random random =  new Random();
 
-        return 0;
+        int vote = (int) internal;
+        if(internal >= 25) {
+            vote = random.nextInt(7) + 17;
+        }
+
+        return vote;
     }
 
     public double getExterno(){
+
         return 0;
     }
 
