@@ -1,10 +1,7 @@
 package smartlab.service;
 
 import org.springframework.stereotype.Service;
-import smartlab.model.PredictionPackage;
-import smartlab.model.Preference;
-import smartlab.model.Vote;
-import smartlab.model.UserTemperatureProfile;
+import smartlab.model.*;
 import weka.classifiers.Classifier;
 import weka.classifiers.lazy.IBk;
 import weka.core.Attribute;
@@ -120,6 +117,18 @@ public class KNNService {
         return temperatures;
     }
 
+    private List<Vote> getRatingsSuavizados(Double temperatura, Double suavizacao) throws Exception {
+        List<Vote> temperaturas = new ArrayList<>();
+
+        for (int i = 0; i < 14; i++) {
+            double temp = i+16;
+
+            temperaturas.add(new Vote(attrPref.value(i), Math.pow(suavizacao,Math.abs(temp - temperatura))));
+        }
+
+        return temperaturas;
+    }
+
     public UserTemperatureProfile calculateTemperatureProfile(PredictionPackage predictionPackage) throws Exception {
         List<Preference> preferenceList = predictionPackage.getVoteList();
         Preference current = predictionPackage.getCurrente();
@@ -139,17 +148,24 @@ public class KNNService {
         KNNCustomClassifier ibk = new KNNCustomClassifier(instances.size());
         ibk.buildClassifier(instances);
 
-        userTemperatureProfile.setVotes(getRatings(ibk, currentInstance));
+        if(predictionPackage.getAlgortimoPreference().equals(AlgortimoPreference.Distancia)) {
+            userTemperatureProfile.setVotes(getRatings(ibk, currentInstance));
+        }
+
         userTemperatureProfile.setIdUsuario(predictionPackage.getIdUsuario());
 
         instances  = instances2(preferenceList);
         currentInstance = instances.remove(instances.numInstances()-1);
-        Classifier classifier = new IBk(3);
+        Classifier classifier = new IBk(predictionPackage.getKnn());
         classifier.buildClassifier(instances);
         classifier.classifyInstance(currentInstance);
 
 //        userTemperatureProfile.setTemperatura(Double.valueOf(currentInstance.toString(attrPref2)));
         userTemperatureProfile.setTemperatura(classifier.classifyInstance(currentInstance));
+
+        if(predictionPackage.getAlgortimoPreference().equals(AlgortimoPreference.Suavizacao)) {
+            userTemperatureProfile.setVotes(getRatingsSuavizados(userTemperatureProfile.getTemperatura(), predictionPackage.getSuavizacao()));
+        }
 
         return userTemperatureProfile;
     }

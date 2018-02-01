@@ -7,21 +7,21 @@
     <div class="card-content table-responsive">
 
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="card card-stats">
             <div class="card-content">
               <p class="category">Gerar Preferência (Consenso)</p>
               <div class="input-group">
-                <select name="teste" id="">
-                  <option value="0">Menor Distância</option>
-                  <option value="1">KNN com suavização</option>
+                <select [(ngModel)]="medidaDistancia">
+                  <option value="Distancia">Menor Distância</option>
+                  <option value="Suavizacao">KNN com suavização</option>
                 </select>
               </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
           </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="card card-stats">
             <div class="card-content">
               <p class="category">Algortimo </p>
@@ -39,7 +39,17 @@
           </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
+          <div class="card card-stats">
+            <div class="card-content">
+
+                Knn: <input type="text" [(ngModel)]="knn">
+                Fator Suavização: <input type="text" [(ngModel)]="suavizacao">
+            </div><!-- /.col-lg-6 -->
+          </div>
+        </div>
+
+        <div class="col-sm-3">
           <div class="card card-stats">
             <div class="card-content">
               <button (click)="salvarConfiguracao()">Aplicar</button>

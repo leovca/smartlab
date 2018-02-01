@@ -18,200 +18,6 @@ export class UsuariosComponent implements OnInit {
   todosUsuarios: any;
   usuarios: any = [];
 
-  chart = new Chart({
-    id : 'chart-1',
-    data : {
-      "backgroundColor":'#FBFCFE',
-      "type": "radar",
-      "legend":{
-
-      },
-      "plot": {
-        "aspect": "area",
-        "background-color":'#FBFCFE',
-        "active-area":true
-      },
-      "plotarea":{
-        "margin":'dynamic'
-      },
-      "scale-v": {
-        "values": "0:1:0.05",
-        "labels": ["", "", "", "", "", ""],
-        "ref-line": {
-          "line-color": "none"
-        },
-        "guide": {
-          "line-style": "solid",
-          "line-color":'#D7D8D9'
-        }
-      },
-      "scale-k": {
-        "values": [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
-        "labels" : [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
-        "format": "%vC°",
-        "aspect": "circle", //To set the chart shape to circular.
-        "guide": {
-          "line-style": "solid",
-          "line-color" : "#1E5D9E",
-        },
-        "item": {
-          "padding": 5,
-          "font-color" : "#1E5D9E",
-          "font-family": 'Montserrat'
-        },
-      },
-      "series": []
-    },
-    height : 700,
-    width : 600
-  });
-
-  chartTemps = new Chart({
-    id : 'chart-2',
-    height : 700,
-    width : 900,
-  data : {
-  "globals": {
-    "font-family": "Helvetica"
-  },
-  "type": "bar",
-  "background-color": "white",
-  "title": {
-    "color": "#606060",
-    "background-color": "white",
-    "text": "Temperaturas por Algortimo"
-  },
-  "scale-y": {
-    "line-color": "none",
-    "tick": {
-      "line-color": "none"
-    },
-    "guide": {
-      "line-style": "solid"
-    },
-    "item": {
-      "color": "#606060"
-    }
-  },
-  "scale-x": {
-    "values": [],
-    "line-color": "#C0D0E0",
-    "line-width": 1,
-    "tick": {
-      "line-width": 1,
-      "line-color": "#C0D0E0"
-    },
-    "guide": {
-      "visible": false
-    },
-    "item": {
-      "color": "#606060"
-    }
-  },
-  "crosshair-x": {
-    "marker": {
-      "visible": false
-    },
-    "line-color": "none",
-    "line-width": "0px",
-    "scale-label": {
-      "visible": false
-    },
-    "plot-label": {
-      "text": "%data-browser: %v% of total",
-      "multiple": true,
-      "font-size": "12px",
-      "color": "#606060",
-      "background-color": "white",
-      "border-width": 3,
-      "alpha": 0.9,
-      "callout": true,
-      "callout-position": "bottom",
-      "shadow": 0,
-      "placement": "node-top",
-      "border-radius": 4,
-      "offsetY":-20,
-      "padding":8,
-      "rules": [
-        {
-          "rule": "%i==0",
-          "border-color": "#1976d2"
-        },
-        {
-          "rule": "%i==1",
-          "border-color": "#424242"
-        },
-        {
-          "rule": "%i==2",
-          "border-color": "#388e3c"
-        },
-        {
-          "rule": "%i==3",
-          "border-color": "#ffa000"
-        },
-        {
-          "rule": "%i==4",
-          "border-color": "#7b1fa2"
-        },
-        {
-          "rule": "%i==5",
-          "border-color": "#c2185b"
-        }
-      ]
-    }
-  },
-  "plot": {
-    "data-browser": [
-      "<span style='font-weight:bold;color:#1976d2;'>1Internet Explorer</span>",
-      "<span style='font-weight:bold;color:#424242;'>Chrome</span>",
-      "<span style='font-weight:bold;color:#388e3c;'>Firefox</span>",
-      "<span style='font-weight:bold;color:#ffa000;'>Safari</span>",
-      "<span style='font-weight:bold;color:#7b1fa2;'>Opera</span>",
-      "<span style='font-weight:bold;color:#c2185b;'>Unknown</span>"
-    ],
-    "cursor": "hand",
-    "value-box": {
-      "text": "%v%",
-      "text-decoration": "underline",
-      "color": "#606060"
-    },
-    "tooltip": {
-      "visible": false
-    },
-    "rules": [
-      {
-        "rule": "%i==0",
-        "background-color": "#1976d2"
-      },
-      {
-        "rule": "%i==1",
-        "background-color": "#424242"
-      },
-      {
-        "rule": "%i==2",
-        "background-color": "#388e3c"
-      },
-      {
-        "rule": "%i==3",
-        "background-color": "#ffa000"
-      },
-      {
-        "rule": "%i==4",
-        "background-color": "#7b1fa2"
-      },
-      {
-        "rule": "%i==5",
-        "background-color": "#c2185b"
-      }
-    ]
-  },
-  "series": [
-    {
-      "values": []
-    }
-  ]
-}});
-
   constructor(
     private _stompService: StompService,
     private _http: Http,
@@ -264,17 +70,6 @@ export class UsuariosComponent implements OnInit {
       userProfile.v = userProfile.v.map(this.normalize(minValue, maxValue))
     });
 
-    let background = ["#800080", "#000080", "#008080", "#008000", "#808000", "#323e4a", "#00FFFF", "#0000FF", "#FF00FF"];
-
-    let series = recomendacao.userTemperatureProfiles.reduce(function (anterior, atual, index) {
-      return anterior.concat({
-        "background-color": background[index],
-        "line-color": background[index],
-        "values": atual.v,
-        "text": `Usuario_${atual.idUsuario}`
-      })
-    }, []);
-
     let series2 = recomendacao.userTemperatureProfiles.reduce(function (anterior, atual, index) {
       anterior[atual.idUsuario] = {
         id: 1,
@@ -284,20 +79,53 @@ export class UsuariosComponent implements OnInit {
       return anterior;
     }, {});
 
-    this.chart.data["series"] = series;
-
     let series2Ajustas = [];
     for (let i = 1; i <= 8; i++) {
       if(series2[i]){
         series2Ajustas= series2Ajustas.concat(series2[i])
       } else {
-        series2Ajustas = series2Ajustas.concat({data:[], label: `Usuarrio_${i}`})
+        series2Ajustas = series2Ajustas.concat({data:[], label: `Usuário_${i}`})
       }
     }
 
     this.radarChartData = series2Ajustas;
+
+    let valores = recomendacao.recomendacaoList.map((rec) => rec.consenso);
+    let algNames = recomendacao.recomendacaoList.map((rec) => rec.nameAlgorithms);
+
+    this.barChartLabels = algNames;
+    this.barChartData = [{
+        data: valores,
+        label: 'Valores'
+      }];
+
+    let temps = recomendacao.userTemperatureProfiles.map(u=>u.temperatura);
+    let recs = recomendacao.recomendacaoList.map(rec => rec.consenso);
+
+    this.barChartDataErro = recs.map(v=>temps.map(t=> Math.pow((t-v),2)).reduce((a, b) => a + b, 0)/temps.length);
   })
 }
+
+  public barChartLabels:string[] = ["AverageWithoutMisery", "LeastMisery", "MostPleasure", "Multiplicative", "BordaCount", "Knn"];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = false;
+  public barChartOptions:any = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  };
+
+  public barChartDataErro:any[] = [
+    {data: [0,0,0,0,0,0], label: 'Valores'}
+  ];
+
+  public barChartData:any[] = [
+    {data: [0,0,0,0,0,0], label: 'Valores'}
+  ];
 
   public radarChartLabels:any[] = [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 

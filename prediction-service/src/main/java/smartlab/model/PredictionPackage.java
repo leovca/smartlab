@@ -6,8 +6,37 @@ public class PredictionPackage {
     List<Preference> voteList;
     Preference currente;
     Integer idUsuario;
+    AlgortimoPreference algortimoPreference;
+
+    Integer knn;
+    Double suavizacao;
+
 
     public PredictionPackage() {
+    }
+
+    public AlgortimoPreference getAlgortimoPreference() {
+        return algortimoPreference;
+    }
+
+    public void setAlgortimoPreference(AlgortimoPreference algortimoPreference) {
+        this.algortimoPreference = algortimoPreference;
+    }
+
+    public Integer getKnn() {
+        return knn;
+    }
+
+    public void setKnn(Integer knn) {
+        this.knn = knn;
+    }
+
+    public Double getSuavizacao() {
+        return suavizacao;
+    }
+
+    public void setSuavizacao(Double suavizacao) {
+        this.suavizacao = suavizacao;
     }
 
     public Integer getIdUsuario() {

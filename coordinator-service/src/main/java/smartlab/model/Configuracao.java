@@ -14,6 +14,25 @@ public class Configuracao {
     AlgorithmsType algorithmsType;
     AlgortimoPreference algortimoPreference;
 
+    Integer knn = 3;
+    Double suavizacao = 0.5;
+
+    public Integer getKnn() {
+        return knn;
+    }
+
+    public void setKnn(Integer knn) {
+        this.knn = knn;
+    }
+
+    public Double getSuavizacao() {
+        return suavizacao;
+    }
+
+    public void setSuavizacao(Double suavizacao) {
+        this.suavizacao = suavizacao;
+    }
+
     public Integer getId() {
         return id;
     }

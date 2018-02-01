@@ -14,6 +14,10 @@ export class ConfiguracoesComponent implements OnInit {
     private _http: Http) { }
 
   algorimo: any;
+  medidaDistancia: any;
+  suavizacao: any;
+  knn: any;
+
 
   ngOnInit(): void {
 
@@ -24,7 +28,9 @@ export class ConfiguracoesComponent implements OnInit {
     this._http.post("http://localhost:5153/setConfig",
       {
         "algorithmsType": this.algorimo,
-        "algortimoPreference": 1
+        "algortimoPreference": this.medidaDistancia,
+        "knn": this.knn,
+        "suavizacao": this.suavizacao
       })
       .subscribe(data => {}, error => {
         console.log(JSON.stringify(error.json()));

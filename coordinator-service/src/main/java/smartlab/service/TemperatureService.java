@@ -10,10 +10,7 @@ import smartlab.repository.ConfiguracaoRepository;
 import smartlab.repository.RecomendacaoPackageRepository;
 import smartlab.repository.VoteRepository;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,21 +54,28 @@ public class TemperatureService {
         Configuracao configuracao = configuracaoRepository.findTopByOrderByIdDesc();
         if(configuracao == null){
             configuracao = new Configuracao();
+            configuracao.setKnn(3);
+            configuracao.setSuavizacao(0.5);
         }
         if(configuracao.getAlgorithmsType() == null){
-
             configuracao.setAlgorithmsType(AlgorithmsType.AverageWithoutMisery);
         }
+        if(configuracao.getAlgortimoPreference() == null){
+            configuracao.setAlgortimoPreference(AlgortimoPreference.Distancia);
+        }
+
+        Configuracao finalConfiguracao = configuracao;
 
         List<Integer> onlineUsers = edgeClient.onlineUsers();
         UserPreference current = getCurrent();
 
         List<UserTemperatureProfile> profiles = onlineUsers.stream()
-                .map(voteRepository::queryTemperatureProfile)
-                .filter(votes -> !votes.isEmpty())
-                .map(votes -> new PredictionPackage(votes, current))
-                .map(predictionClient::predictTemperature)
-                .collect(Collectors.toList());
+                    .map(voteRepository::queryTemperatureProfile)
+                    .filter(votes -> !votes.isEmpty())
+                    .map(votes -> new PredictionPackage(votes, current, finalConfiguracao.getAlgortimoPreference(),
+                            finalConfiguracao.getKnn(), finalConfiguracao.getSuavizacao()))
+                    .map(predictionClient::predictTemperature)
+                    .collect(Collectors.toList());
 
         Double[] resultKnn = profiles.stream()
                 .map(profile -> profile.getTemperatura())
@@ -94,18 +98,26 @@ public class TemperatureService {
             recomendacaoPackage.setRecomendacaoList(consensusClient.getAllRecommendation(profiles));
         }
 
+        if(recomendacaoPackage.getRecomendacaoList() == null){
+            recomendacaoPackage.setRecomendacaoList(new ArrayList<>());
+        }
         recomendacaoPackage.getRecomendacaoList()
                 .add(new Recomendacao("Knn", recomendacaoPackage.getTimeStamp(), temperaturaMedianaKNN));
 
-        Configuracao finalConfiguracao = configuracao;
         recomendacaoPackage.setUserTemperatureProfiles(profiles);
-        recomendacaoPackage.setTemperaturaUtilizada(recomendacaoPackage.getRecomendacaoList()
-                .stream()
-                .filter(recomendacao ->
-                        Objects.equals(recomendacao.getNameAlgorithms(),
-                                finalConfiguracao.getAlgorithmsType().name()))
-                .findFirst()
-                .get().getConsenso());
+
+        try {
+            recomendacaoPackage.setTemperaturaUtilizada(recomendacaoPackage.getRecomendacaoList()
+                    .stream()
+                    .filter(recomendacao ->
+                            Objects.equals(recomendacao.getNameAlgorithms(),
+                                    finalConfiguracao.getAlgorithmsType().name()))
+                    .findFirst()
+                    .get().getConsenso());
+        }catch (Exception ex){
+            recomendacaoPackage.setDeligar(true);
+            ex.printStackTrace();
+        }
 
         recomendacaoPackageRepository.save(recomendacaoPackage);
 
