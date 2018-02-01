@@ -1,8 +1,10 @@
 package smartlab.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import smartlab.model.UserPreference;
+import smartlab.repository.VoteRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,13 @@ import java.util.Random;
 @RestController
 public class SimulatorPreference {
 
+    @Autowired
+    VoteRepository voteRepository;
+
     @GetMapping("user/data/preference")
     public List<UserPreference> putData(){
+        voteRepository.deleteAll();
+
         List<UserPreference> userPreferences = new ArrayList<>();
         Random randomGaus =  new Random();
         boolean perfil = false;
@@ -66,6 +73,7 @@ public class SimulatorPreference {
             }
         }
 
+        voteRepository.save(userPreferences);
         return userPreferences;
     }
 
