@@ -55,19 +55,20 @@ services:
       - "8752:8752"
     depends_on:
       - discovery
-#  db:
-#    image: mysql:5.7
-#    volumes:
-#      - /var/lib/mysql
-#    restart: always
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_DATABASE: db
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: root
-#    networks:
-#      - "discovery"
-#    ports:
-#      - "33061:3306"
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - /var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    networks:
+      - "discovery"
+    ports:
+      - "33061:3306"
 networks:
   discovery:
