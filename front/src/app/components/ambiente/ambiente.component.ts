@@ -40,10 +40,11 @@ export class AmbienteComponent implements OnInit {
     }).subscribe((msg_body: any) => {
       this.valor = msg_body;
       if(this.valor.airTemp){
-        this._airService.setTemperature(this.valor.airTemp);
+        this._airService.setTemperature(Math.round(this.valor.airTemp));
       } else {
-        this._airService.setTemperature(this.valor.external);
+        this._airService.setTemperature(Math.round(this.valor.external));
       }
+      this.valor.airTemp = Math.round(this.valor.airTemp);
 
       if(this.valor.recomendacao){
         this._recomendacaoService.setRecomencadao(this.valor.recomendacao);

@@ -99,8 +99,8 @@ export class UsuariosComponent implements OnInit {
         label: 'Valores'
       }];
 
-    let temps = recomendacao.userTemperatureProfiles.map(u=>u.temperatura);
-    let recs = recomendacao.recomendacaoList.map(rec => rec.consenso);
+    let temps = recomendacao.userTemperatureProfiles.map(u=> Math.round(u.temperatura));
+    let recs = recomendacao.recomendacaoList.map(rec => Math.round(rec.consenso));
 
     this.barChartDataErro = recs.map(v=>temps.map(t=> Math.pow((t-v),2)).reduce((a, b) => a + b, 0)/temps.length);
   })

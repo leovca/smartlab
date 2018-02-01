@@ -88,6 +88,14 @@ public class TemperatureService {
             temperaturaMedianaKNN = (resultKnn[resultKnn.length / 2] + resultKnn[(resultKnn.length - 1) / 2]) / 2;
         }
 
+        Double temperaturaMediaKNN = 0d;
+        if(resultKnn.length > 0) {
+            for (Double valor : resultKnn) {
+                temperaturaMediaKNN += valor;
+            }
+            temperaturaMediaKNN = temperaturaMediaKNN / resultKnn.length;
+        }
+
         RecomendacaoPackage recomendacaoPackage = new RecomendacaoPackage();
         recomendacaoPackage.setTimeStamp(Calendar.getInstance().getTime());
         if(profiles.isEmpty()){
